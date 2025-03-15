@@ -28,6 +28,7 @@ const Header = () => {
    Unleash Your Inner Braniac
 </p>
                         </div>
+                        
                         <div className="col-2"></div>
                     </div>
                 </div>
