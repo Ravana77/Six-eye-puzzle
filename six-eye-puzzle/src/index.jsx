@@ -9,6 +9,12 @@ import Layout from './layout';
 import Aboutus from './aboutus';
 import Easy from './easy';
 import Hard from './hard';
+import How from './how';
+import Home from './home';
+import SignUp from './signup';
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +27,10 @@ root.render(
         <Route path="/aboutus" element={<Aboutus />} />
         <Route path="/easy" element={<Easy />} />
         <Route path="/hard" element={<Hard />} />
+        <Route path="/how" element={<How />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         
       </Routes>
       </Layout>

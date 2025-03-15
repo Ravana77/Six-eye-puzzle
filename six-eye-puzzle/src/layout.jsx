@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 
 
@@ -33,33 +34,62 @@ const Header = () => {
                     </div>
                 </div>
             </header>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
-                <div className="container">
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
-                        <ul className="navbar-nav w-100 d-flex justify-content-around">
-                            <li className="nav-item flex-grow-1 text-center">
-                                <a className="nav-link btn btn-lg text-white fw-bold w-100 hover-effect fs-1">
-                                    Home
-                                </a>
-                            </li>
-                            <li className="nav-item flex-grow-1 text-center">
-                                <a className="nav-link btn btn-lg text-white fw-bold w-100 hover-effect fs-1">
-                                    How to play
-                                </a>
-                            </li>
-                            <li className="nav-item flex-grow-1 text-center">
-                                <a className="nav-link btn btn-lg text-white fw-bold w-100 hover-effect fs-1">
-                                    About Us
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            
+    <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
+      <div className="container">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul className="navbar-nav w-100 d-flex justify-content-around">
+            <li className="nav-item flex-grow-1 text-center">
+              <Link to="home" className="nav-link custom-glow">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item flex-grow-1 text-center">
+              <Link to="how" className="nav-link custom-glow">
+                How to Play
+              </Link>
+            </li>
+            <li className="nav-item flex-grow-1 text-center">
+              <Link to="/aboutus" className="nav-link custom-glow">
+                About Us
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <style>
+        {`
+          .custom-glow {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 0 5px #ffcc00, 0 0 10px #ff9900, 0 0 15px #ff0000;
+          }
+
+          .custom-glow:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff9900, 0 0 30px #ffcc00;
+          }
+        `}
+      </style>
+    </nav>
+  
 
 
         </div>

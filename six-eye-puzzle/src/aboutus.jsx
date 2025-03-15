@@ -2,24 +2,24 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-dark text-white p-6">
-      <div className="max-w-3xl bg-secondary shadow-lg rounded-2xl p-8">
-        <h1 className="text-3xl font-bold mb-4">About Us</h1>
-        <p className="mb-4">
-          Welcome to **[Your Project Name]**, a platform designed to challenge and enhance your problem-solving skills through an interactive six-equation game.
-        </p>
-        <p className="mb-4">
-          Our project was developed as part of **[Your University Name]**'s initiative to push the boundaries of educational gaming. Using **React** and **Firebase**, we have built an intuitive and engaging experience for users who love logical challenges.
-        </p>
-        <p className="mb-4">
-          The game is powered by the **Banana API**, developed by **[Your University/Department Name]**, ensuring a dynamic and exciting gameplay experience. We strive to bring fun and learning together in an innovative way.
-        </p>
-        <h2 className="text-xl font-semibold mt-6 mb-2">Meet the Team</h2>
-        <ul>
-          <li>👩‍💻 **[Your Name]** – Lead Developer</li>
-          <li>🧑‍🎨 **[Another Fake Name]** – UI/UX Designer</li>
-          <li>📊 **[Yet Another Fake Name]** – Project Manager</li>
-        </ul>
+    <div className="min-vh-100 d-flex justify-content-center align-items-center bg-dark text-light p-4">
+      <div className="container text-center">
+        <div className="card bg-secondary p-4 shadow-lg">
+          <h1 className="text-info fw-bold text-uppercase" style={{ textShadow: "0 0 10px rgba(173, 216, 230, 0.8)" }}>
+            About Us
+          </h1>
+          <p className="mt-3">
+            Welcome to <strong>SIX EYE PUZZLE</strong>, a platform designed to challenge and enhance your problem-solving skills through an interactive six-equation game.
+          </p>
+          <p>
+            Our project was developed as part of <strong>University of Bedfordshire</strong>'s initiative to push the boundaries of educational gaming. Using <strong>React</strong> and <strong>Firebase</strong>, we have built an intuitive and engaging experience for users who love logical challenges.
+          </p>
+          <p>
+            The game is powered by the <strong>Banana </strong> <strong>API</strong>, ensuring a dynamic and exciting gameplay experience. We strive to bring fun and learning together in an innovative way.
+          </p>
+          <h2 className="mt-4 fw-semibold">Meet the Developer</h2>
+          <p>👩‍💻 <strong>Ranasinghe H.R</strong> –  Developer</p>
+        </div>
       </div>
     </div>
   );
