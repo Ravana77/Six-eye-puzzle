@@ -12,7 +12,7 @@ import Hard from './hard';
 import How from './how';
 import Home from './home';
 import SignUp from './signup';
-
+import Profile from './profile';
 
 
 
@@ -31,6 +31,7 @@ root.render(
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/profile" element={<Profile />} />
         
       </Routes>
       </Layout>

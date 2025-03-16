@@ -7,6 +7,8 @@ const Easy = () => {
   const [userAnswer, setUserAnswer] = React.useState("");
   const [message, setMessage] = React.useState("");
 
+  
+/*connecting the api*/ 
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
       .then(response => response.json())

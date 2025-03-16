@@ -22,13 +22,14 @@ const Hard = () => {
     }
   }, [timer, userAnswer]);
 
+/*connecting the api*/
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
       .then(response => response.json())
       .then(data => {
         setPuzzleBg(data.question);
-        setPuzzleSolution(data.solution);
-        setTimer(10); // Reset Timer
+        setPuzzleSolution(data.solution);//getting the solution from the api part is here
+        setTimer(10); // Reset Timer clock thingy
         setUserAnswer(null);
         setMessage("");
       })
@@ -36,7 +37,7 @@ const Hard = () => {
   };
 
   const checkSolution = () => {
-    if (userAnswer === "⏳") return; // If time is up, don't allow submission
+    if (userAnswer === "⏳") return; // If time is up ban submission (optional)change later
 
     if (parseInt(userAnswer) === puzzleSolution) {
       setMessage("🔥 LEGENDARY! You got it right!");
