@@ -1,7 +1,18 @@
 import React from 'react';
+import { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getAllUsers } from './firebase'; // Import the usersRef from firebase.js
 
 function App() {
+  const handleGetUsers = async () => {
+    try {
+      const users = await getAllUsers(); // Call the async function and wait for the result
+      console.log("Users:", users); // Log the fetched users
+    } catch (error) {
+      console.error("Error fetching users:", error); // Handle any errors
+    }
+  };
+
   return (
     <div className="App bg-dark text-white">
       <div className="container d-flex justify-content-center align-items-center min-vh-100 flex-column text-center">
@@ -12,7 +23,11 @@ function App() {
         <div className="d-flex gap-4">
           {/* Log In Button with Link */}
           <a 
-            href="/login" 
+            href="/login"
+            onClick={(e) => {
+              e.preventDefault(); // Prevent default navigation
+              handleGetUsers();
+            }}
             className="btn btn-warning btn-lg" 
             style={{ 
               transition: 'transform 0.3s, box-shadow 0.3s', 
