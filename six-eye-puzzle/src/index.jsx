@@ -13,6 +13,12 @@ import How from './how';
 import Home from './home';
 import SignUp from './signup';
 import Profile from './profile';
+import TimeAttack from './timeattack';
+import Survival from './survival';
+import Memory from './memory';
+import Scramble from './scramble';
+import Classic from './classic';
+import Rank from './rank';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -36,6 +42,13 @@ root.render(
                 <Route path="/how" element={<How />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/timeattack" element={<TimeAttack />} />
+                <Route path="/survival" element={<Survival />} />
+                <Route path="/memory" element={<Memory />} />
+                <Route path="/scramble" element={<Scramble />} />
+                <Route path="/classic" element={<Classic />} />
+                <Route path="/rank" element={<Rank />} />
+                {/* Add more routes as needed */}
               </Routes>
             </Layout>
           }
