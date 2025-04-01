@@ -37,6 +37,35 @@ function Login() {
 
   return (
     <div style={{ backgroundColor: '#000', height: '100vh' }}>
+
+      {/* Header Section */}
+      <header className="bg-dark text-white text-center py-4">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-2">
+              <img src="/logo.png" alt="Game Logo" width="400" height="auto" style={{ filter: "invert(1)" }} />
+            </div>
+            <div className="col-8">
+              <h1 className="display-4 text-primary fw-bold text-uppercase"
+                style={{
+                  fontFamily: "Orbitron, sans-serif",
+                  color: "#001f3f",
+                  WebkitTextStroke: "1px white",
+                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)"
+                }}>Six Eye Puzzle</h1>
+              <p className="lead text-warning fw-bold text-uppercase text-center"
+                style={{
+                  fontFamily: "Orbitron, sans-serif",
+                  textShadow: "2px 2px 8px rgba(255, 165, 0, 0.8)"
+                }}>
+                Unleash Your Inner Braniac
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Login Form Section */}
       <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Row className="justify-content-center w-100">
           <Col md={6} lg={4} className="bg-dark p-5 rounded shadow-lg">
@@ -106,6 +135,18 @@ function Login() {
           </Col>
         </Row>
       </Container>
+
+      {/* Footer Section */}
+      <footer className="bg-dark text-white text-center py-4">
+        <div className="container">
+          <p className="mb-1">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
+          <p className="mb-1">Game Version – Version 1.0.0</p>
+          <p className="mb-1">Contact Information – chillehasindu123@gmail.com</p>
+          <p className="mb-1">Developer Credit – Developed by Ranasinghe H.R</p>
+          <p className="mb-0">Tagline/Slogan (Optional) – "Challenge your mind with Six-Eye Puzzle!"</p>
+        </div>
+      </footer>
+
     </div>
   );
 }
