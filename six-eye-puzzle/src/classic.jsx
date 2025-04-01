@@ -1,13 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Home() {
+function Classic() {
   return (
     <div className="d-flex vh-100 bg-dark align-items-center">
       {/* Left Side: Buttons */}
       <div className="d-flex flex-column align-items-center w-50 p-3">
         <a
-          href="/classic" // Link to easy.jsx
+          href="/easy" // Link to easy.jsx
           className="btn text-light fw-bold w-100 py-5 mb-3"
           style={{
             backgroundColor: 'orange',
@@ -18,10 +18,10 @@ function Home() {
           onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
           onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
         >
-          Classic
+          Easy
         </a>
         <a
-          href="/rank" // Link to hard.jsx
+          href="/hard" // Link to hard.jsx
           className="btn text-light fw-bold w-100 py-5"
           style={{
             backgroundColor: 'red',
@@ -32,7 +32,7 @@ function Home() {
           onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
           onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
         >
-          Rank
+          Hard
         </a>
       </div>
 
@@ -71,4 +71,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Classic;
