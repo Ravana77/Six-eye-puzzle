@@ -71,12 +71,9 @@ function App() {
           {/* Log In Button with Link */}
           <a 
             href="/login"
-            onClick={(e) => {
-              e.preventDefault(); // Prevent default navigation
-              handleGetUsers();
-            }}
+           
             className="btn btn-warning btn-lg" 
-            style={{ 
+            style={{  
               transition: 'transform 0.3s, box-shadow 0.3s', 
               fontSize: '2rem', 
               fontWeight: 'bold', 

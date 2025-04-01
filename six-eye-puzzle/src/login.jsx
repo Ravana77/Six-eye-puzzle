@@ -69,7 +69,7 @@ function Login() {
       <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Row className="justify-content-center w-100">
           <Col md={6} lg={4} className="bg-dark p-5 rounded shadow-lg">
-            <h2 className="text-center text-white mb-4" style={{ fontFamily: 'Press Start 2P, cursive' }}>Gamer Login</h2>
+            <h2 className="text-center text-white mb-4" style={{ fontFamily: 'Press Start 2P, cursive' }}> Login</h2>
             <Form onSubmit={handleSignIn}>
               <Form.Group className="mb-3">
                 <Form.Label className="text-white">Username</Form.Label>
