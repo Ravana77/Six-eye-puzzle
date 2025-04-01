@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './App.css'; // Importing custom CSS for alignment fixes
+import { checkUser, addUser } from './firebase'; // Importing the checkUser function from firebase.js
+import { useSession } from './sessionContext'; // Importing the session context
+
 
 function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, logout } = useSession(); // Accessing the login function from session context
 
   // Handle the sign-up button hover state for glowing effect
   const [isHovered, setIsHovered] = useState(false);
@@ -14,7 +18,29 @@ function SignUp() {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log('Signed Up:', username, email, password);
+    try {
+      console.log('Signed Up:', username, email, password);
+      // Check for user existing first
+      const userExists = checkUser(username, password, login, logout, 'test');
+      if (userExists === true) {
+        alert('Username already exists. Please choose a different one.');
+        return;
+      }
+      else {
+        // Add the user to the database
+        addUser(username, email, password,login,logout).then(() => {
+          alert('Sign-up successful! Redirecting to home page...');
+          // window.location.href = '/home'; // Redirect to home page after sign-up
+        }).catch((error) => {
+          console.error('Error adding user:', error);
+          alert('An error occurred. Please try again later.');
+        });
+      }
+    }
+    catch (error) {
+      console.error('Error during sign-up:', error);
+      alert('An error occurred. Please try again later.');
+    }
   };
 
   // Inline styles for the glowing effect, zooming effect, and button appearance
@@ -110,7 +136,7 @@ function SignUp() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 style={glowingStyle}
-                onClick={() => window.location.href = '/home'} // Redirect to home page after sign-up
+                onClick={handleSignUp} // Redirect to home page after sign-up
               >
                 Sign Up
               </Button>

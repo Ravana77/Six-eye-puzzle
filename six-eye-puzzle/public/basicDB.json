@@ -3,20 +3,29 @@
       "1": {
         "name": "John Doe",
         "email": "johndoe@example.com",
-        "highscore": 0,
+        "timeattack": 0,
+        "survival": 0,
+        "memory": 0,
+        "scramble": 0,
         "password": "password123"
       },
       "2": {
         "name": "Jane Smith",
         "email": "janesmith@example.com",
-        "highscore": 0,
+        "timeattack": 0,
+        "survival": 0,
+        "memory": 0,
+        "scramble": 0,
         "password": "password123"
       },
       "3": {
-        "name": "Alice Johnson",
-        "email": "alicejohnson@example.com",
-        "highscore": 0,
-        "password": "password123"
+        "name": "a",
+        "email": "a",
+        "timeattack": 0,
+        "survival": 0,
+        "memory": 0,
+        "scramble": 0,
+        "password": "a"
       }
     }
   }

@@ -2,18 +2,37 @@ import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import './App.css'; // Importing custom CSS for alignment fixes
+import { useSession } from './sessionContext'; // Importing the session context
+import { checkUser } from './firebase';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { login, logout, user } = useSession(); // Accessing the login and logout functions from session context
 
   // Handle the sign-in button hover state for glowing effect
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveredSignUp, setIsHoveredSignUp] = useState(false);
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log('Signed In:', username, password);
+    try {
+      // Await the result of the checkUser function
+      const isValidUser = await checkUser(username, password, login, logout, 'abc');
+  
+      if (isValidUser) {
+        // If the user is valid, redirect to /home
+        // create user object, and set it in the session
+        // instead print out the sessionContext
+        console.log('User logged in:', user);
+        window.location.href = '/home';
+      } else {
+        alert('Invalid username or password. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      alert('An error occurred. Please try again later.');
+    }
   };
 
   // Inline styles for the glowing effect and button appearance
@@ -109,7 +128,7 @@ function Login() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 style={glowingStyle}
-                onClick={() => window.location.href = '/home'}
+                onClick={handleSignIn}
               >
                 Sign In
               </Button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Header = () => {
     return (
@@ -111,11 +111,13 @@ const Footer = () => {
     );
 };
 
-const Layout = ({ children }) => {
+const Layout = () => {
     return (
         <div>
             <Header />
-            <main>{children}</main>
+            <main>
+                <Outlet /> {/* This renders the child routes dynamically */}
+            </main>
             <Footer />
         </div>
     );
