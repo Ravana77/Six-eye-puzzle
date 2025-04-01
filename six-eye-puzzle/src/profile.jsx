@@ -1,16 +1,37 @@
 import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
+import { useSession } from './sessionContext';
+import { fetchProfile } from './firebase'; 
 
 const Profile = () => {
-  const userProfile = {
-    username: 'Gamer123',
-    userId: 'UID56789',
-    email: 'gamer123@example.com',
-    highestScoreTimeAttack: 1800,
-    highestScoreSurvival: 1700,
-    highestScoreMemory: 1600,
-    highestScoreScramble: 1500,
-  };
+  const { user } = useSession(); // Accessing the user from session context
+  const [userProfile, setUserProfile] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    console.log('user', user);
+    if (user) {
+      setUserProfile({
+        username: user.name || 'Unknown Player',
+        email: user.email || 'Email not detected, Log In Again',
+        highestScoreTimeAttack: user.timeattack || 0,
+        highestScoreSurvival: user.survival || 0,
+        highestScoreMemory: user.memory || 0,
+        highestScoreScramble: user.scramble || 0,
+      });
+    }
+  }, [user]);
+
+  if (!userProfile) {
+    // Render a loading state or a fallback message while userProfile is null
+    return (
+      <Container fluid className="bg-dark text-white d-flex flex-column min-vh-100 py-5">
+        <div className="text-center">
+          <h1 className="text-info">Loading Profile...</h1>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container fluid className="bg-dark text-white d-flex flex-column min-vh-100 py-5">
@@ -30,11 +51,6 @@ const Profile = () => {
             <i className="bi bi-person-circle me-2"></i>
             {userProfile.username}
           </Card.Title>
-          
-          <div className="mb-3">
-            <div className="text-secondary">USER ID</div>
-            <div className="text-white fs-5">{userProfile.userId}</div>
-          </div>
           
           <div>
             <div className="text-secondary">EMAIL</div>

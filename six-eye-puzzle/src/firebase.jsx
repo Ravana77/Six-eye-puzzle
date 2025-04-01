@@ -125,6 +125,48 @@ async function updateScore(email, game, score) {
   return false; // User not found
 }
 
+// a function that scans all users and returns, a list of top 10 users, sorted by score, params of game type.
+async function fetchLeaderboard(game) {
+  // frst convert the Strnig game type to database suitable types
+  if (game === "Time Attack") {
+    game = "timeattack";
+  } else if (game === "Scramble") {
+    game = "scramble";
+  } else if (game === "Survival") {
+    game = "survival";
+  } else if (game === "Memory") {
+    game = "memory";
+  } else {
+    console.error("Invalid game type:", game);
+    return []; // Invalid game type
+  }
+  const users = await getAllUsers(); // Fetch all users from the database
+  console.log(users); // Log the users for debugging
 
-export { app, database, getAllUsers, checkUser, addUser, updateScore };
+  // Create an array of users with their scores
+  const userScores = Object.entries(users).map(([userId, user]) => ({
+    name: user.name,
+    email: user.email,
+    score: user[game] || 0, // Get the score for the specified game or default to 0
+  }));
+
+  // Sort the users by score in descending order and take the top 10
+  const topUsers = userScores.sort((a, b) => b.score - a.score).slice(0, 10);
+  return topUsers; // Return the top 10 users
+}
+
+async function fetchProfile(email) {
+  const users = await getAllUsers(); // Fetch all users from the database
+  console.log(users); // Log the users for debugging
+
+  for (const userId in users) {
+    const user = users[userId];
+    if (user.email === email) {
+      return user; // Return the user profile if found
+    }
+  }
+  return null; // User not found
+}
+
+export { app, database, getAllUsers, checkUser, addUser, updateScore, fetchLeaderboard };
 

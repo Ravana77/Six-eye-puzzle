@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, Outlet } from "react-router-dom";
 
 const Header = () => {
+
     return (
         <div>
             <header className="bg-dark text-white text-center py-4">
@@ -15,30 +16,39 @@ const Header = () => {
                             <h1 className="display-4 text-primary fw-bold text-uppercase"
                                 style={{
                                     fontFamily: "Orbitron, sans-serif",
-                                    color: "#001f3f", 
-                                    WebkitTextStroke: "1px white", 
-                                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)" 
+                                    color: "#001f3f",
+                                    WebkitTextStroke: "1px white",
+                                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)"
                                 }}>Six Eye Puzzle</h1>
                             <p className="lead text-warning fw-bold text-uppercase text-center"
                                 style={{
                                     fontFamily: "Orbitron, sans-serif",
-                                    textShadow: "2px 2px 8px rgba(255, 165, 0, 0.8)" 
+                                    textShadow: "2px 2px 8px rgba(255, 165, 0, 0.8)"
                                 }}>
                                 Unleash Your Inner Braniac
                             </p>
                         </div>
-                        <div className="col-2 text-end">
-                            <img src="/avatar.png" alt="User Avatar" width="50" height="50" className="rounded-circle me-2" />
-                            <a href="./profile" target="_self">
-  <button className="btn btn-warning fw-bold text-uppercase">Profile</button>
-</a>
-
-
+                        <div className="col-2 text-end align-items-center justify-content-center">
+                            <img
+                                src="/avatar.png"
+                                alt="User Avatar"
+                                width="50"
+                                height="50"
+                                className="rounded-circle me-2"
+                            />
+                            {/* Profile Button */}
+                            <a href="./profile" target="_self" className="me-2">
+                                <button className="btn btn-warning fw-bold text-uppercase">Profile</button>
+                            </a>
+                            {/* Leaderboard Button */}
+                            <a href="./leaderboard" target="_self">
+                                <button className="btn btn-dark fw-bold text-uppercase">Leaderboard</button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </header>
-          
+
             <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
                 <div className="container">
                     <button

@@ -20,6 +20,7 @@ import Memory from './memory';
 import Scramble from './scramble';
 import Classic from './classic';
 import Rank from './rank';
+import Leaderboard from './leaderboard'; // Import the Leaderboard component
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -46,6 +47,7 @@ root.render(
           <Route path="/scramble" element={<Scramble />} />
           <Route path="/classic" element={<Classic />} />
           <Route path="/rank" element={<Rank />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Route>
       </Routes>
     </Router>

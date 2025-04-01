@@ -1,31 +1,94 @@
 {
-    "users": {
-      "1": {
-        "name": "John Doe",
-        "email": "johndoe@example.com",
-        "timeattack": 0,
-        "survival": 0,
-        "memory": 0,
-        "scramble": 0,
-        "password": "password123"
-      },
-      "2": {
-        "name": "Jane Smith",
-        "email": "janesmith@example.com",
-        "timeattack": 0,
-        "survival": 0,
-        "memory": 0,
-        "scramble": 0,
-        "password": "password123"
-      },
-      "3": {
-        "name": "a",
-        "email": "a",
-        "timeattack": 0,
-        "survival": 0,
-        "memory": 0,
-        "scramble": 0,
-        "password": "a"
-      }
+  "users": {
+    "1": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "timeattack": 3,
+      "survival": 5,
+      "memory": 1,
+      "scramble": 4,
+      "password": "password123"
+    },
+    "2": {
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "timeattack": 6,
+      "survival": 2,
+      "memory": 4,
+      "scramble": 0,
+      "password": "password123"
+    },
+    "3": {
+      "name": "a",
+      "email": "a",
+      "timeattack": 1,
+      "survival": 3,
+      "memory": 5,
+      "scramble": 2,
+      "password": "a"
+    },
+    "4": {
+      "name": "Alice Johnson",
+      "email": "alicejohnson@example.com",
+      "timeattack": 0,
+      "survival": 4,
+      "memory": 6,
+      "scramble": 1,
+      "password": "password123"
+    },
+    "5": {
+      "name": "Bob Brown",
+      "email": "bobbrown@example.com",
+      "timeattack": 2,
+      "survival": 0,
+      "memory": 3,
+      "scramble": 5,
+      "password": "password123"
+    },
+    "6": {
+      "name": "Charlie Davis",
+      "email": "charliedavis@example.com",
+      "timeattack": 4,
+      "survival": 6,
+      "memory": 0,
+      "scramble": 3,
+      "password": "password123"
+    },
+    "7": {
+      "name": "Diana Evans",
+      "email": "dianaevans@example.com",
+      "timeattack": 5,
+      "survival": 1,
+      "memory": 2,
+      "scramble": 6,
+      "password": "password123"
+    },
+    "8": {
+      "name": "Ethan Foster",
+      "email": "ethanfoster@example.com",
+      "timeattack": 6,
+      "survival": 3,
+      "memory": 4,
+      "scramble": 0,
+      "password": "password123"
+    },
+    "9": {
+      "name": "Fiona Green",
+      "email": "fionagreen@example.com",
+      "timeattack": 0,
+      "survival": 2,
+      "memory": 1,
+      "scramble": 5,
+      "password": "password123"
+    },
+    "10": {
+      "name": "George Harris",
+      "email": "georgeharris@example.com",
+      "timeattack": 3,
+      "survival": 5,
+      "memory": 6,
+      "scramble": 2,
+      "password": "password123"
     }
   }
+}
