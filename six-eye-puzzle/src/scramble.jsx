@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useSession } from "./sessionContext"; // Importing the session context
+import { updateScore } from "./firebase"; // Importing the updateScore function
 
 const Scramble = () => {
   const [puzzleBg, setPuzzleBg] = useState(null);
@@ -13,6 +15,7 @@ const Scramble = () => {
   const [showScoreModal, setShowScoreModal] = useState(false);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
+  const { user, updateSessionScore } = useSession(); // Accessing the user from session context
 
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
@@ -74,6 +77,17 @@ const Scramble = () => {
   };
 
   const handleWrongAnswer = () => {
+    const updateGameScore = async () => {
+        try {
+            const a = await updateScore(user.email, 'scramble', score);
+            if (a) {
+                updateSessionScore('scramble', score); // Update session score
+            }
+        } catch (error) {
+            console.error("Error updating score:", error);
+        }
+    };
+    updateGameScore();
     setGameActive(false);
     setShowScoreModal(true);
   };

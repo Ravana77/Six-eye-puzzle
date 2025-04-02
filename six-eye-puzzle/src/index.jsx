@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { SessionProvider } from "./sessionContext"; // Import the SessionProvider
 import Login from './login';
 import Layout from './layout';
 import Aboutus from './aboutus';
@@ -19,10 +20,12 @@ import Memory from './memory';
 import Scramble from './scramble';
 import Classic from './classic';
 import Rank from './rank';
+import Leaderboard from './leaderboard'; // Import the Leaderboard component
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <SessionProvider> {/* Wrap your app with SessionProvider */}
     <Router>
       <Routes>
         {/*Route without Layout*/} 
@@ -31,29 +34,23 @@ root.render(
         <Route path="/signup" element={<SignUp />} />
 
         {/* Routes with Layout */}
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <Routes>
-                <Route path="/aboutus" element={<Aboutus />} />
-                <Route path="/easy" element={<Easy />} />
-                <Route path="/hard" element={<Hard />} />
-                <Route path="/how" element={<How />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/timeattack" element={<TimeAttack />} />
-                <Route path="/survival" element={<Survival />} />
-                <Route path="/memory" element={<Memory />} />
-                <Route path="/scramble" element={<Scramble />} />
-                <Route path="/classic" element={<Classic />} />
-                <Route path="/rank" element={<Rank />} />
-                {/* Add more routes as needed */}
-              </Routes>
-            </Layout>
-          }
-        />
+        <Route path="/" element={<Layout />}>
+          <Route path="/aboutus" element={<Aboutus />} />
+          <Route path="/easy" element={<Easy />} />
+          <Route path="/hard" element={<Hard />} />
+          <Route path="/how" element={<How />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/timeattack" element={<TimeAttack />} />
+          <Route path="/survival" element={<Survival />} />
+          <Route path="/memory" element={<Memory />} />
+          <Route path="/scramble" element={<Scramble />} />
+          <Route path="/classic" element={<Classic />} />
+          <Route path="/rank" element={<Rank />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Route>
       </Routes>
     </Router>
+    </SessionProvider>
   </React.StrictMode>
 );

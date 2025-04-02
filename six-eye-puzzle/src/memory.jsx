@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useSession } from "./sessionContext"; // Importing the session context
+import { updateScore } from "./firebase"; // Importing the updateScore function
 
 const Memory = () => {
   const [puzzleBg, setPuzzleBg] = useState(null);
@@ -12,6 +14,7 @@ const Memory = () => {
   const [showScoreModal, setShowScoreModal] = useState(false);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const { user, updateSessionScore } = useSession(); // Accessing the user from session context
 
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
@@ -52,6 +55,17 @@ const Memory = () => {
     } else {
       setMessage("❌ Incorrect! Game Over");
       setTimeout(() => {
+        const updateGameScore = async () => {
+            try {
+                const a = await updateScore(user.email, 'memory', currentStreak);
+                if (a) {
+                    updateSessionScore('memory', currentStreak); // Update session score
+                }
+            } catch (error) {
+                console.error("Error updating score:", error);
+            }
+        };
+        updateGameScore();
         setGameActive(false);
         setShowScoreModal(true);
       }, 1500);
