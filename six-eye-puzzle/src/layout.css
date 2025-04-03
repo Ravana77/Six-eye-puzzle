@@ -91,3 +91,13 @@
         flex: 1 0 100%;
     }
 }
+
+.abcd {
+    /* ADD YOUR PURPLE NEON BACKGROUND IMAGE HERE */
+    background-color: #07f717; /* Fallback color */
+    background-image: url('../public/neon-skyscrapers.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+  }

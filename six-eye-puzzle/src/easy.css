@@ -1,0 +1,123 @@
+/* Easy.css */
+.easy-game-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .game-content {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(34, 17, 51, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+    backdrop-filter: blur(5px);
+    border: 1px solid #8a2be2;
+  }
+  
+  .puzzle-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border: 3px solid #bf7aff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #bf7aff;
+    margin-bottom: 1.5rem;
+    filter: hue-rotate(-10deg) brightness(1.1) contrast(1.1);
+  }
+  
+  .answer-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    background-color: rgba(20, 0, 40, 0.8);
+    border: 2px solid #bf7aff;
+    color: #e6d5ff;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .answer-input:focus {
+    outline: none;
+    border-color: #ff00ff;
+    box-shadow: 0 0 15px #ff00ff;
+    background-color: rgba(30, 0, 60, 0.9);
+  }
+  
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .game-btn {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 200px;
+  }
+  
+  .check-btn {
+    background: linear-gradient(45deg, #8a2be2, #ff00ff);
+    color: white;
+    box-shadow: 0 0 15px #8a2be2;
+  }
+  
+  .check-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 25px #ff00ff;
+  }
+  
+  .refresh-btn {
+    background: linear-gradient(45deg, #4b0082, #9400d3);
+    color: white;
+    box-shadow: 0 0 15px #4b0082;
+  }
+  
+  .refresh-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 0 25px #9400d3;
+  }
+  
+  .message-alert {
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .correct {
+    background-color: rgba(0, 255, 0, 0.2);
+    color: #b3ffb3;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 15px #00ff00;
+  }
+  
+  .incorrect {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #ffb3b3;
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 15px #ff0000;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }

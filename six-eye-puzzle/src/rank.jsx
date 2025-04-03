@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Rank() {
   return (
-    <div className="d-flex vh-100 bg-dark align-items-center">
+    <div className="d-flex vh-100 align-items-center">
       {/* Left Side: Buttons */}
       <div className="d-flex flex-column align-items-center w-50 p-3">
         <a

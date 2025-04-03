@@ -91,7 +91,7 @@ const Footer = () => {
 
 const Layout = () => {
     return (
-        <div className="bg-black text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
+        <div className="abcd text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
             <Header />
             <main className="py-4 flex-grow-1">
                 <Outlet />
