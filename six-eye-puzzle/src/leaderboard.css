@@ -1,0 +1,144 @@
+/* Leaderboard.css */
+.leaderboard-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.leaderboard-content {
+    padding: 2rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.leaderboard-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #bf7aff;
+    text-shadow: 0 0 10px #bf7aff;
+    text-align: center;
+}
+
+.game-type-selector {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.game-type-label {
+    font-size: 1.2rem;
+    color: #e6d5ff;
+}
+
+.game-type-dropdown {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #8a2be2;
+    background-color: rgba(34, 17, 51, 0.8);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-type-dropdown:hover {
+    border-color: #bf7aff;
+    box-shadow: 0 0 10px #8a2be2;
+}
+
+.game-type-dropdown:focus {
+    outline: none;
+    border-color: #bf7aff;
+    box-shadow: 0 0 15px #8a2be2;
+}
+
+.scores-container {
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(34, 17, 51, 0.5);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+}
+
+.top-scores-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #00ff7f;
+    text-shadow: 0 0 8px rgba(0, 255, 127, 0.5);
+    text-align: center;
+}
+
+.scores-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.score-item {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 5px;
+    background: rgba(138, 43, 226, 0.1);
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.score-item:hover {
+    background: rgba(138, 43, 226, 0.2);
+    transform: translateX(5px);
+}
+
+.score-item:nth-child(1) {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.score-item:nth-child(2) {
+    color: #c0c0c0;
+    font-weight: bold;
+}
+
+.score-item:nth-child(3) {
+    color: #cd7f32;
+    font-weight: bold;
+}
+
+.no-scores {
+    text-align: center;
+    color: #e6d5ff;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .leaderboard-content {
+        padding: 1.5rem;
+    }
+    
+    .leaderboard-title {
+        font-size: 1.8rem;
+    }
+    
+    .game-type-label {
+        font-size: 1rem;
+    }
+    
+    .top-scores-title {
+        font-size: 1.3rem;
+    }
+    
+    .score-item {
+        font-size: 1rem;
+    }
+}
