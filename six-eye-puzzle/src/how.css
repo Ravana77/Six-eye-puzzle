@@ -1,0 +1,157 @@
+/* HowToPlay.css */
+.how-to-play-container {
+    min-height: 100vh;
+    color: white;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .how-to-play-content {
+    max-width: 1000px;
+    width: 100%;
+  }
+  
+  .game-title {
+    color: #bf7aff;
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px #bf7aff;
+    font-weight: bold;
+  }
+  
+  .section-title {
+    color: #00ff7f;
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 127, 0.5);
+    border-bottom: 2px solid #8a2be2;
+    padding-bottom: 0.5rem;
+  }
+  
+  .game-mode-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .mode-card {
+    background: rgba(34, 17, 51, 0.7);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .mode-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .mode-card.classic {
+    border-color: #8a2be2;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+  }
+  
+  .mode-card.time-attack {
+    border-color: #00ff7f;
+    box-shadow: 0 0 20px rgba(0, 255, 127, 0.5);
+  }
+  
+  .mode-card.survival {
+    border-color: #ff1493;
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+  }
+  
+  .mode-card.memory {
+    border-color: #00bfff;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+  }
+  
+  .mode-card.scramble {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  
+  .mode-title {
+    color: #bf7aff;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px currentColor;
+  }
+  
+  .mode-instructions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .mode-instructions li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #e6d5ff;
+  }
+  
+  .mode-instructions li::before {
+    content: '•';
+    color: #bf7aff;
+    position: absolute;
+    left: 0;
+  }
+  
+  .general-instructions {
+    background: rgba(34, 17, 51, 0.7);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid #8a2be2;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+  }
+  
+  .general-instructions ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .general-instructions li {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    position: relative;
+    color: #e6d5ff;
+    font-size: 1.1rem;
+  }
+  
+  .general-instructions li::before {
+    content: '→';
+    color: #00ff7f;
+    position: absolute;
+    left: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .how-to-play-container {
+      padding: 1.5rem;
+    }
+    
+    .game-title {
+      font-size: 2.5rem;
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+    }
+    
+    .mode-title {
+      font-size: 1.3rem;
+    }
+    
+    .general-instructions li {
+      font-size: 1rem;
+    }
+  }

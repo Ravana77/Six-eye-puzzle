@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { useSession } from './sessionContext';
 import { fetchProfile } from './firebase'; 
-import './profile.css'; // New CSS file for custom styles
+import './profile.css';
 
 const Profile = () => {
   const { user } = useSession();
@@ -61,10 +61,10 @@ const Profile = () => {
 
       {/* Game Stats */}
       <Container className="stats-container">
-        <Row className="stats-row">
+        <Row className="justify-content-center g-4">
           {/* Time Attack */}
-          <Col md={5}>
-            <Card className="stat-card timeattack">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card timeattack w-100">
               <Card.Body className="stat-card-body">
                 <div className="stat-title">
                   <i className="bi bi-clock-fill me-2"></i>
@@ -78,8 +78,8 @@ const Profile = () => {
           </Col>
 
           {/* Survival */}
-          <Col md={5}>
-            <Card className="stat-card survival">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card survival w-100">
               <Card.Body className="stat-card-body">
                 <div className="stat-title">
                   <i className="bi bi-heart-pulse-fill me-2"></i>
@@ -93,8 +93,8 @@ const Profile = () => {
           </Col>
 
           {/* Memory */}
-          <Col md={5}>
-            <Card className="stat-card memory">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card memory w-100">
               <Card.Body className="stat-card-body">
                 <div className="stat-title">
                   <i className="bi bi-brain-fill me-2"></i>
@@ -108,8 +108,8 @@ const Profile = () => {
           </Col>
 
           {/* Scramble */}
-          <Col md={5}>
-            <Card className="stat-card scramble">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card scramble w-100">
               <Card.Body className="stat-card-body">
                 <div className="stat-title">
                   <i className="bi bi-shuffle me-2"></i>
