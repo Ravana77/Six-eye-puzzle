@@ -2,9 +2,10 @@ import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { useSession } from './sessionContext';
 import { fetchProfile } from './firebase'; 
+import './profile.css';
 
 const Profile = () => {
-  const { user } = useSession(); // Accessing the user from session context
+  const { user } = useSession();
   const [userProfile, setUserProfile] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
@@ -23,54 +24,53 @@ const Profile = () => {
   }, [user]);
 
   if (!userProfile) {
-    // Render a loading state or a fallback message while userProfile is null
     return (
-      <Container fluid className="bg-dark text-white d-flex flex-column min-vh-100 py-5">
+      <Container fluid className="profile-container loading">
         <div className="text-center">
-          <h1 className="text-info">Loading Profile...</h1>
+          <h1 className="loading-text">Loading Profile...</h1>
         </div>
       </Container>
     );
   }
 
   return (
-    <Container fluid className="bg-dark text-white d-flex flex-column min-vh-100 py-5">
+    <Container fluid className="profile-container">
       {/* Header */}
-      <div className="text-center mb-5">
-        <h1 className="text-info fw-bold mb-3">
+      <div className="profile-header">
+        <h1 className="profile-title">
           <i className="bi bi-joystick me-2"></i>
           PLAYER PROFILE
         </h1>
-        <div className="bg-info mx-auto opacity-50" style={{ height: '2px', width: '100px' }}></div>
+        <div className="profile-divider"></div>
       </div>
 
       {/* Profile Card */}
-      <Card className="border-info border-opacity-25 bg-dark bg-opacity-50 mx-auto mb-5" style={{ maxWidth: '500px' }}>
-        <Card.Body className="p-4">
-          <Card.Title className="text-info fw-bold fs-2 mb-4 text-center">
+      <Card className="profile-card">
+        <Card.Body className="profile-card-body">
+          <Card.Title className="profile-username">
             <i className="bi bi-person-circle me-2"></i>
             {userProfile.username}
           </Card.Title>
           
-          <div>
-            <div className="text-secondary">EMAIL</div>
-            <div className="text-light fs-5">{userProfile.email}</div>
+          <div className="profile-email">
+            <div className="email-label">EMAIL</div>
+            <div className="email-value">{userProfile.email}</div>
           </div>
         </Card.Body>
       </Card>
 
       {/* Game Stats */}
-      <Container className="mb-5">
-        <Row className="g-4 justify-content-center">
+      <Container className="stats-container">
+        <Row className="justify-content-center g-4">
           {/* Time Attack */}
-          <Col md={5}>
-            <Card className="h-100 border-primary border-opacity-50 bg-dark bg-opacity-50 shadow-lg shadow-primary">
-              <Card.Body className="text-center py-4">
-                <div className="text-primary fw-bold fs-5 mb-3">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card timeattack w-100">
+              <Card.Body className="stat-card-body">
+                <div className="stat-title">
                   <i className="bi bi-clock-fill me-2"></i>
                   TIME ATTACK HIGHEST SCORE
                 </div>
-                <div className="text-white fw-bold display-5">
+                <div className="stat-value">
                   {userProfile.highestScoreTimeAttack}
                 </div>
               </Card.Body>
@@ -78,14 +78,14 @@ const Profile = () => {
           </Col>
 
           {/* Survival */}
-          <Col md={5}>
-            <Card className="h-100 border-danger border-opacity-50 bg-dark bg-opacity-50 shadow-lg shadow-danger">
-              <Card.Body className="text-center py-4">
-                <div className="text-danger fw-bold fs-5 mb-3">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card survival w-100">
+              <Card.Body className="stat-card-body">
+                <div className="stat-title">
                   <i className="bi bi-heart-pulse-fill me-2"></i>
                   SURVIVAL HIGHEST SCORE
                 </div>
-                <div className="text-white fw-bold display-5">
+                <div className="stat-value">
                   {userProfile.highestScoreSurvival}
                 </div>
               </Card.Body>
@@ -93,14 +93,14 @@ const Profile = () => {
           </Col>
 
           {/* Memory */}
-          <Col md={5}>
-            <Card className="h-100 border-success border-opacity-50 bg-dark bg-opacity-50 shadow-lg shadow-success">
-              <Card.Body className="text-center py-4">
-                <div className="text-success fw-bold fs-5 mb-3">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card memory w-100">
+              <Card.Body className="stat-card-body">
+                <div className="stat-title">
                   <i className="bi bi-brain-fill me-2"></i>
                   MEMORY HIGHEST SCORE
                 </div>
-                <div className="text-white fw-bold display-5">
+                <div className="stat-value">
                   {userProfile.highestScoreMemory}
                 </div>
               </Card.Body>
@@ -108,14 +108,14 @@ const Profile = () => {
           </Col>
 
           {/* Scramble */}
-          <Col md={5}>
-            <Card className="h-100 border-warning border-opacity-50 bg-dark bg-opacity-50 shadow-lg shadow-warning">
-              <Card.Body className="text-center py-4">
-                <div className="text-warning fw-bold fs-5 mb-3">
+          <Col xs={12} md={5} lg={3} className="d-flex justify-content-center">
+            <Card className="stat-card scramble w-100">
+              <Card.Body className="stat-card-body">
+                <div className="stat-title">
                   <i className="bi bi-shuffle me-2"></i>
                   SCRAMBLE HIGHEST SCORE
                 </div>
-                <div className="text-white fw-bold display-5">
+                <div className="stat-value">
                   {userProfile.highestScoreScramble}
                 </div>
               </Card.Body>

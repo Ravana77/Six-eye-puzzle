@@ -1,0 +1,233 @@
+/* TimeAttack.css */
+.timeattack-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.start-screen {
+    text-align: center;
+    max-width: 600px;
+}
+
+.game-title {
+    font-size: 2.5rem;
+    color: #bf7aff;
+    text-shadow: 0 0 15px #bf7aff;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.start-button {
+    background: linear-gradient(45deg, #8a2be2, #ff00ff);
+    color: white;
+    font-size: 1.5rem;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #8a2be2;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px #ff00ff;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.stats-row {
+    width: 75%;
+    margin-bottom: 2rem;
+}
+
+.stat-box {
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: rgba(34, 17, 51, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid #8a2be2;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.time-left {
+    color: #bf7aff;
+    text-shadow: 0 0 8px #bf7aff;
+    margin: 0;
+}
+
+.score {
+    color: #00ff7f;
+    text-shadow: 0 0 8px #00ff7f;
+    margin: 0;
+}
+
+.puzzle-container {
+    max-width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 25px #ff00ff;
+    transition: all 0.3s ease;
+}
+
+.puzzle-image {
+    width: 100%;
+    display: block;
+    padding: 1.5rem;
+    filter: invert(1) hue-rotate(-10deg) brightness(1.1);
+}
+
+.buttons-container {
+    width: 75%;
+    margin-bottom: 2rem;
+}
+
+.buttons-row {
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.number-button {
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #4b0082, #8a2be2);
+    color: #e6d5ff;
+    box-shadow: 0 0 10px #8a2be2;
+    transition: all 0.2s ease;
+}
+
+.number-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+.number-button.selected {
+    background: linear-gradient(45deg, #ff00ff, #ff1493);
+    color: white;
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+.message-alert {
+    width: 75%;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 1rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.message-alert.success {
+    background: linear-gradient(45deg, rgba(0, 255, 127, 0.2), rgba(0, 191, 255, 0.2));
+    color: #00ff7f;
+    box-shadow: 0 0 15px #00ff7f;
+    backdrop-filter: blur(5px);
+}
+
+.message-alert.error {
+    background: linear-gradient(45deg, rgba(255, 20, 147, 0.2), rgba(255, 69, 0, 0.2));
+    color: #ff1493;
+    box-shadow: 0 0 15px #ff1493;
+    backdrop-filter: blur(5px);
+    animation: shake 0.5s ease;
+}
+
+.game-over-modal .modal-content {
+    background-color: #120827;
+    border: 2px solid #8a2be2;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #8a2be2;
+}
+
+.modal-body-content {
+    padding: 2rem;
+    text-align: center;
+}
+
+.modal-title {
+    color: #bf7aff;
+    text-shadow: 0 0 10px #bf7aff;
+    margin-bottom: 2rem;
+}
+
+.modal-score {
+    color: #e6d5ff;
+    margin-bottom: 2rem;
+}
+
+.modal-score span {
+    color: #00ff7f;
+    text-shadow: 0 0 8px #00ff7f;
+}
+
+.play-again-button {
+    background: linear-gradient(45deg, #8a2be2, #ff00ff);
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.75rem 2.5rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #8a2be2;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.play-again-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #ff00ff;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .start-button {
+        font-size: 1.2rem;
+        padding: 0.75rem 2rem;
+    }
+    
+    .stats-row {
+        width: 90%;
+    }
+    
+    .buttons-container {
+        width: 90%;
+    }
+    
+    .number-button {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+    
+    .message-alert {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+}

@@ -1,42 +1,81 @@
 import React from "react";
+import "./how.css"; // New CSS file for custom styles
 
-function how() {
+function HowToPlay() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1 style={{ color: "#00aaff", fontFamily: "Arial, sans-serif", fontSize: "2em" }}>
+    <div className="how-to-play-container">
+      <div className="how-to-play-content">
+        <h1 className="game-title">
           6 Eye Puzzle
         </h1>
-        <p style={{ color: "#3498db", fontFamily: "Verdana, sans-serif", fontSize: "0.8em", lineHeight: "2.5", marginBottom: "20px" }}>
-          <strong style={{ color: "#ff7f50" }}>Start the Game:</strong> A random math puzzle will appear as an image on the screen.
-        </p>
-        <p style={{ color: "#3498db", fontFamily: "Verdana, sans-serif", fontSize: "0.8em", lineHeight: "2.5", marginBottom: "20px" }}>
-          <strong style={{ color: "#ff7f50" }}>Choose Your Answer:</strong>
-          <br />
-          <span style={{ color: "#f39c12" }}>Hard Mode:</span> Select your answer by clicking the appropriate number button.
-          <br />
-          <span style={{ color: "#f39c12" }}>Easy Mode:</span> Enter your answer in the provided input field.
-        </p>
-        <p style={{ color: "#3498db", fontFamily: "Verdana, sans-serif", fontSize: "0.8em", lineHeight: "2.5", marginBottom: "20px" }}>
-          <strong style={{ color: "#ff7f50" }}>Lock & Submit:</strong>
-          <br />
-          <span style={{ color: "#f39c12" }}>Hard Mode:</span> The selected number button will change color when locked.
-          <br />
-          Click the Submit button to confirm your answer.
-        </p>
-        <p style={{ color: "#3498db", fontFamily: "Verdana, sans-serif", fontSize: "0.8em", lineHeight: "2.5", marginBottom: "20px" }}>
-          <strong style={{ color: "#ff7f50" }}>Check the Result:</strong>
-          <br />
-          If your answer is correct, a new puzzle will load.
-          <br />
-          If your answer is incorrect, the correct answer will be displayed before moving on to the next puzzle.
-        </p>
-        <p style={{ color: "#3498db", fontFamily: "Verdana, sans-serif", fontSize: "0.8em", lineHeight: "2.5", marginBottom: "20px" }}>
-          <strong style={{ color: "#ff7f50" }}>Time Limit:</strong> You have 10 seconds to answer each puzzle. If time runs out, the game will automatically move to the next puzzle.
-        </p>
-      </header>
+        
+        <div className="game-mode-section">
+          <h2 className="section-title">Game Modes</h2>
+          
+          <div className="mode-card classic">
+            <h3 className="mode-title">Classic Mode</h3>
+            <ul className="mode-instructions">
+              <li>Solve math puzzles at your own pace</li>
+              <li>Type your answer in the input field</li>
+              <li>Get instant feedback on your solution</li>
+              <li>Perfect for relaxed, thoughtful gameplay</li>
+            </ul>
+          </div>
+          
+          <div className="mode-card time-attack">
+            <h3 className="mode-title">Time Attack</h3>
+            <ul className="mode-instructions">
+              <li>Race against a 60-second timer</li>
+              <li>Each correct answer adds 5 seconds</li>
+              <li>Score depends on how many puzzles you solve</li>
+              <li>Test your speed and accuracy</li>
+            </ul>
+          </div>
+          
+          <div className="mode-card survival">
+            <h3 className="mode-title">Survival</h3>
+            <ul className="mode-instructions">
+              <li>Start with 3 lives</li>
+              <li>10 seconds per puzzle</li>
+              <li>Lose a life for each wrong answer</li>
+              <li>See how long you can survive!</li>
+            </ul>
+          </div>
+          
+          <div className="mode-card memory">
+            <h3 className="mode-title">Memory</h3>
+            <ul className="mode-instructions">
+              <li>Puzzle disappears after 5 seconds</li>
+              <li>Remember the solution from memory</li>
+              <li>Build a streak for bonus points</li>
+              <li>Time decreases as your streak grows</li>
+            </ul>
+          </div>
+          
+          <div className="mode-card scramble">
+            <h3 className="mode-title">Scramble</h3>
+            <ul className="mode-instructions">
+              <li>Numbers appear in random order</li>
+              <li>Reconstruct the correct solution</li>
+              <li>10-second time limit per puzzle</li>
+              <li>Score multiplies with each correct answer</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="general-instructions">
+          <h2 className="section-title">How to Play</h2>
+          <ul>
+            <li>Select your preferred game mode</li>
+            <li>Solve the math puzzle that appears</li>
+            <li>Submit your answer before time runs out</li>
+            <li>Watch your score improve with each correct answer</li>
+            <li>Compete for the highest score on the leaderboard!</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default how;
+export default HowToPlay;
