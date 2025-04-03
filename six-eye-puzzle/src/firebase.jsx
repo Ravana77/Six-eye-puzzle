@@ -69,6 +69,11 @@ async function addUser(name, email, password, login, logout) {
     console.error("Invalid parameters for addUser function");
     return false; // Invalid parameters
   }
+  // validate email format
+  if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+    console.error("Invalid email format:", email);
+    return false; // Invalid email format
+  }
   try {
     // call dbRef to get the usersRef which is already called in firebase.jsx
     const dbRef = ref(database);
@@ -166,7 +171,7 @@ async function fetchProfile(email) {
     }
   }
   return null; // User not found
-}
+} 
 
 export { app, database, getAllUsers, checkUser, addUser, updateScore, fetchLeaderboard };
 

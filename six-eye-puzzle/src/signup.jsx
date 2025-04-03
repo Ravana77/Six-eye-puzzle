@@ -30,7 +30,7 @@ function SignUp() {
         // Add the user to the database
         addUser(username, email, password,login,logout).then(() => {
           alert('Sign-up successful! Redirecting to home page...');
-          // window.location.href = '/home'; // Redirect to home page after sign-up
+          window.location.href = '/home'; // Redirect to home page after sign-up
         }).catch((error) => {
           console.error('Error adding user:', error);
           alert('An error occurred. Please try again later.');
