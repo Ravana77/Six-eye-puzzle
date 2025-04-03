@@ -1,58 +1,44 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, Outlet } from "react-router-dom";
+import './layout.css';
 
 const Header = () => {
-
     return (
-        <div>
-            <header className="bg-dark text-white text-center py-4">
+        <div className="crt-effect">
+            <header className="bg-black text-center py-2 py-md-3 border-bottom border-neon">
                 <div className="container">
                     <div className="row align-items-center">
-                        <div className="col-2">
-                            <img src="/logo.png" alt="Game Logo" width="400" height="auto" style={{ filter: "invert(1)" }} />
+                        <div className="col-4 col-md-2 order-1">
+                            <img 
+                                src="/logo.png" 
+                                alt="Game Logo" 
+                                className="img-fluid d-none d-md-block" 
+                                style={{ 
+                                    filter: "drop-shadow(0 0 8px #ff00ff) invert(0.8)",
+                                    maxHeight: '80px'
+                                }} 
+                            />
                         </div>
-                        <div className="col-8">
-                            <h1 className="display-4 text-primary fw-bold text-uppercase"
-                                style={{
-                                    fontFamily: "Orbitron, sans-serif",
-                                    color: "#001f3f",
-                                    WebkitTextStroke: "1px white",
-                                    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)"
-                                }}>Six Eye Puzzle</h1>
-                            <p className="lead text-warning fw-bold text-uppercase text-center"
-                                style={{
-                                    fontFamily: "Orbitron, sans-serif",
-                                    textShadow: "2px 2px 8px rgba(255, 165, 0, 0.8)"
-                                }}>
-                                Unleash Your Inner Braniac
+                        <div className="col-12 col-md-8 order-3 order-md-2 mt-2 mt-md-0">
+                            <h1 className="display-4 fw-bold text-uppercase mb-0 mb-md-1 neon-text-primary" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
+                                Six Eye Puzzle
+                            </h1>
+                            <p className="lead fw-bold text-uppercase neon-text-secondary mb-0" style={{ fontSize: 'clamp(0.8rem, 2vw, 1.25rem)' }}>
+                                Unleash Your Inner Brainiac
                             </p>
                         </div>
-                        <div className="col-2 text-end align-items-center justify-content-center">
-                            <img
-                                src="/avatar.png"
-                                alt="User Avatar"
-                                width="50"
-                                height="50"
-                                className="rounded-circle me-2"
-                            />
-                            {/* Profile Button */}
-                            <a href="./profile" target="_self" className="me-2">
-                                <button className="btn btn-warning fw-bold text-uppercase">Profile</button>
-                            </a>
-                            {/* Leaderboard Button */}
-                            <a href="./leaderboard" target="_self">
-                                <button className="btn btn-dark fw-bold text-uppercase">Leaderboard</button>
-                            </a>
+                        <div className="col-8 col-md-2 order-2 order-md-3 text-end">
+                            {/* Placeholder for potential mobile menu or other elements */}
                         </div>
                     </div>
                 </div>
             </header>
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
-                <div className="container">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-neon">
+                <div className="container px-0">
                     <button
-                        className="navbar-toggler"
+                        className="navbar-toggler border-neon mx-auto"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNav"
@@ -62,46 +48,28 @@ const Header = () => {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
-                        <ul className="navbar-nav w-100 d-flex justify-content-around">
-                            <li className="nav-item flex-grow-1 text-center">
-                                <Link to="home" className="nav-link custom-glow">
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="nav-item flex-grow-1 text-center">
-                                <Link to="how" className="nav-link custom-glow">
-                                    How to Play
-                                </Link>
-                            </li>
-                            <li className="nav-item flex-grow-1 text-center">
-                                <Link to="/aboutus" className="nav-link custom-glow">
-                                    About Us
-                                </Link>
-                            </li>
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav w-100 d-flex flex-wrap justify-content-center justify-content-lg-around">
+                            {[
+                                { to: "home", text: "Home" },
+                                { to: "how", text: "How to Play" },
+                                { to: "/leaderboard", text: "Leaderboard" },
+                                { to: "/aboutus", text: "About Us" },
+                                { to: "/profile", text: "Profile" }
+                            ].map((item, index) => (
+                                <li key={index} className="nav-item flex-grow-1 text-center mx-1 my-1 my-lg-0">
+                                    <Link 
+                                        to={item.to} 
+                                        className="nav-link neon-nav-link py-2 py-lg-3"
+                                        style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.25rem)' }}
+                                    >
+                                        {item.text}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
-                <style>
-                    {`
-                        .custom-glow {
-                            font-size: 1.5rem;
-                            font-weight: bold;
-                            text-transform: uppercase;
-                            color: white;
-                            text-decoration: none;
-                            padding: 10px 20px;
-                            border-radius: 10px;
-                            transition: 0.3s ease-in-out;
-                            box-shadow: 0 0 5px #ffcc00, 0 0 10px #ff9900, 0 0 15px #ff0000;
-                        }
-
-                        .custom-glow:hover {
-                            transform: scale(1.1);
-                            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff9900, 0 0 30px #ffcc00;
-                        }
-                    `}
-                </style>
             </nav>
         </div>
     );
@@ -109,13 +77,13 @@ const Header = () => {
 
 const Footer = () => {
     return (
-        <footer className="bg-dark text-white text-center py-4">
+        <footer className="bg-black text-neon-secondary text-center py-3 border-top border-neon">
             <div className="container">
-                <p className="mb-1">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
-                <p className="mb-1">Game Version – Version 1.0.0</p>
-                <p className="mb-1">Contact Information – chillehasindu123@gmail.com</p>
-                <p className="mb-1">Developer Credit – Developed by Ranasinghe H.R</p>
-                <p className="mb-0">Tagline/Slogan (Optional) – "Challenge your mind with Six-Eye Puzzle!"</p>
+                <p className="mb-1 small">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
+                <p className="mb-1 small">Game Version – Version 1.0.0</p>
+                <p className="mb-1 small">Contact Information – chillehasindu123@gmail.com</p>
+                <p className="mb-1 small">Developer Credit – Developed by Ranasinghe H.R</p>
+                <p className="mb-0 small">"Challenge your mind with Six-Eye Puzzle!"</p>
             </div>
         </footer>
     );
@@ -123,10 +91,10 @@ const Footer = () => {
 
 const Layout = () => {
     return (
-        <div>
+        <div className="bg-black text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
             <Header />
-            <main>
-                <Outlet /> {/* This renders the child routes dynamically */}
+            <main className="py-4 flex-grow-1">
+                <Outlet />
             </main>
             <Footer />
         </div>

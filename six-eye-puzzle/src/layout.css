@@ -1,0 +1,93 @@
+/* custom-bootstrap.scss*/
+:root {
+    /* Cyberpunk-Retro Colors*/
+    --bs-black: #0a0a0a;
+    --bs-neon-pink: #ff00ff;
+    --bs-neon-cyan: #00f0ff;
+    --bs-neon-yellow: #fff01f;
+}
+
+/*Custom Utility Classes*/
+.border-neon {
+    border-color: var(--bs-neon-pink) !important;
+}
+
+.neon-text-primary {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--bs-neon-cyan) !important;
+    text-shadow: 0 0 10px var(--bs-neon-cyan), 
+                 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+.neon-text-secondary {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--bs-neon-pink) !important;
+    text-shadow: 0 0 8px var(--bs-neon-pink);
+}
+
+.neon-nav-link {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white !important;
+    transition: all 0.3s ease;
+    position: relative;
+    
+    &:hover {
+        color: var(--bs-neon-cyan) !important;
+        transform: translateY(-2px);
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: var(--bs-neon-pink);
+            box-shadow: 0 0 10px var(--bs-neon-pink);
+        }
+    }
+}
+
+/* Optional CRT Effect*/
+.crt-effect {
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            rgba(0, 240, 255, 0.03) 0%, 
+            transparent 2px
+        );
+        pointer-events: none;
+        z-index: 9999;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .nav-item {
+        flex: 1 0 45%;
+        margin: 0.25rem 0;
+    }
+    
+    .neon-nav-link {
+        padding: 0.5rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-item {
+        flex: 1 0 100%;
+    }
+}
