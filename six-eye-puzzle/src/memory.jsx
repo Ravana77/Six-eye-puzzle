@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useSession } from "./sessionContext"; // Importing the session context
-import { updateScore } from "./firebase"; // Importing the updateScore function
+import { useSession } from "./sessionContext";
+import { updateScore } from "./firebase";
+import "./memory.css"; // New CSS file for custom styles
 
 const Memory = () => {
   const [puzzleBg, setPuzzleBg] = useState(null);
@@ -14,7 +15,7 @@ const Memory = () => {
   const [showScoreModal, setShowScoreModal] = useState(false);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const { user, updateSessionScore } = useSession(); // Accessing the user from session context
+  const { user, updateSessionScore } = useSession();
 
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
@@ -59,7 +60,7 @@ const Memory = () => {
             try {
                 const a = await updateScore(user.email, 'memory', currentStreak);
                 if (a) {
-                    updateSessionScore('memory', currentStreak); // Update session score
+                    updateSessionScore('memory', currentStreak);
                 }
             } catch (error) {
                 console.error("Error updating score:", error);
@@ -73,25 +74,19 @@ const Memory = () => {
   };
 
   return (
-    <Container fluid className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white p-0">
+    <Container fluid className="memory-container">
       {/* Start Game Screen */}
       {!gameActive && !showScoreModal && (
-        <div className="text-center" style={{ maxWidth: "600px" }}>
-          <h1 className="display-3 text-warning mb-4" style={{ textShadow: "0 0 15px #ffc107" }}>
+        <div className="start-screen">
+          <h1 className="game-title">
             🧠 Memory Challenge
           </h1>
-          <p className="text-light mb-4 fs-5" style={{ textShadow: "0 0 5px #ffffff" }}>
+          <p className="game-description">
             Remember the number before it disappears! Score is your streak length.
           </p>
           <Button 
-            variant="success" 
-            size="lg" 
             onClick={startNewGame}
-            className="px-5 py-3 fw-bold"
-            style={{
-              boxShadow: "0 0 20px #20c997",
-              fontSize: "1.5rem"
-            }}
+            className="start-button"
           >
             START CHALLENGE
           </Button>
@@ -101,73 +96,41 @@ const Memory = () => {
       {/* Game Active Screen */}
       {gameActive && (
         <>
-          {/* Header */}
-          <div className="text-center mb-4">
-            <h1 className="display-4 text-warning mb-0" style={{ textShadow: "0 0 10px #ffc107" }}>
+          <div className="game-header">
+            <h1 className="game-title">
               🧠 Memory Mode
             </h1>
           </div>
 
-          {/* Current Streak */}
-          <div className="p-3 rounded bg-transparent border-0 text-center mb-4">
-            <h3 className="text-info mb-0" style={{ textShadow: "0 0 8px #0dcaf0" }}>
+          <div className="streak-display">
+            <h3 className="streak-text">
               Current Streak: {currentStreak}
             </h3>
           </div>
 
-          {/* Puzzle Display Area */}
-          <div className="mb-4" style={{ 
-            minHeight: "250px",
-            width: "500px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative"
-          }}>
+          <div className="puzzle-display">
             {showImage && puzzleBg ? (
-              <div style={{ 
-                boxShadow: "0 0 30px #ffc107",
-                borderRadius: "15px",
-                overflow: "hidden"
-              }}>
+              <div className="puzzle-image-container">
                 <img
                   src={puzzleBg}
                   alt="Memory Puzzle"
-                  className="img-fluid p-3"
-                  style={{ 
-                    filter: "invert(1)",
-                    width: "100%",
-                    display: "block"
-                  }}
+                  className="puzzle-image"
                 />
               </div>
             ) : (
-              <div className="d-flex flex-column align-items-center">
-                <div 
-                  className="mb-4 d-flex align-items-center justify-content-center"
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    borderRadius: "50%",
-                    background: "radial-gradient(circle, #333 0%, #111 100%)",
-                    boxShadow: "0 0 30px #ff0066",
-                    fontSize: "3rem",
-                    fontWeight: "bold",
-                    color: "#ff0066"
-                  }}
-                >
+              <div className="hidden-puzzle">
+                <div className="question-mark">
                   ?
                 </div>
-                <h3 className="text-warning" style={{ textShadow: "0 0 10px #ffc107" }}>
+                <h3 className="prompt-text">
                   What was the number?
                 </h3>
               </div>
             )}
           </div>
 
-          {/* Number Buttons 0-9 */}
-          <div className="mb-4 w-75">
-            <Row className="g-2 justify-content-center">
+          <div className="number-buttons-container">
+            <Row className="number-buttons-row">
               {[...Array(10)].map((_, index) => {
                 const answer = index;
                 return (
@@ -175,21 +138,8 @@ const Memory = () => {
                     <Button
                       onClick={() => checkSolution(answer)}
                       disabled={showImage}
-                      variant={selectedAnswer === answer ? 
-                        (answer === puzzleSolution ? "success" : "danger") : 
-                        "primary"}
-                      size="lg"
-                      className="fw-bold px-4 py-2"
-                      style={{
-                        boxShadow: selectedAnswer === answer ? 
-                          (answer === puzzleSolution ? 
-                            "0 0 15px #198754" : 
-                            "0 0 15px #dc3545") : 
-                            "0 0 10px #0d6efd",
-                        transition: "all 0.3s ease",
-                        border: "none",
-                        width: "50px"
-                      }}
+                      className={`number-button ${selectedAnswer === answer ? 
+                        (answer === puzzleSolution ? 'correct' : 'incorrect') : ''}`}
                     >
                       {answer}
                     </Button>
@@ -199,56 +149,35 @@ const Memory = () => {
             </Row>
           </div>
 
-          {/* Message Alert */}
           {message && (
-            <Alert 
-              variant={message.includes("✔️") ? "success" : "danger"} 
-              className="mt-3 w-75 text-center fw-bold border-0"
-              style={{
-                boxShadow: message.includes("✔️") ? 
-                  "0 0 15px #198754" : 
-                  "0 0 15px #dc3545",
-                background: "rgba(25, 135, 84, 0.2)",
-                backdropFilter: "blur(5px)"
-              }}
-            >
+            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
               {message}
             </Alert>
           )}
         </>
       )}
 
-      {/* Score Modal */}
       <Modal 
         show={showScoreModal} 
         onHide={() => setShowScoreModal(false)}
         centered
         backdrop="static"
-        className="text-white"
+        className="score-modal"
       >
-        <Modal.Body className="bg-dark border border-warning rounded">
-          <div className="text-center p-4">
-            <h2 className="text-warning mb-4" style={{ textShadow: "0 0 10px #ffc107" }}>
+        <Modal.Body className="modal-content">
+          <div className="modal-body">
+            <h2 className="modal-title">
               🎯 Your Score
             </h2>
-            <h1 className="display-1 text-info mb-4" style={{ 
-              textShadow: "0 0 15px #0dcaf0",
-              fontWeight: "bold"
-            }}>
+            <h1 className="modal-score">
               {currentStreak}
             </h1>
-            <h4 className="text-light mb-4">
+            <h4 className="modal-subtitle">
               Correct answers in a row
             </h4>
             <Button 
-              variant="success" 
-              size="lg" 
               onClick={startNewGame}
-              className="px-5 py-2 fw-bold"
-              style={{
-                boxShadow: "0 0 15px #20c997",
-                fontSize: "1.2rem"
-              }}
+              className="play-again-button"
             >
               Play Again
             </Button>

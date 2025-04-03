@@ -1,0 +1,200 @@
+/* Profile.css */
+.profile-container {
+    min-height: 100vh;
+    background-color: #120827;
+    color: white;
+    padding: 3rem 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .profile-container.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loading-text {
+    color: #bf7aff;
+    text-shadow: 0 0 10px #bf7aff;
+    font-size: 2rem;
+  }
+  
+  .profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .profile-title {
+    color: #bf7aff;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 15px #bf7aff;
+    font-size: 2.5rem;
+  }
+  
+  .profile-divider {
+    height: 2px;
+    width: 100px;
+    background: linear-gradient(90deg, transparent, #bf7aff, transparent);
+    margin: 0 auto;
+    opacity: 0.7;
+  }
+  
+  .profile-card {
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    background: rgba(34, 17, 51, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 0 auto 3rem;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+  }
+  
+  .profile-card-body {
+    padding: 2rem;
+  }
+  
+  .profile-username {
+    color: #bf7aff;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px #bf7aff;
+  }
+  
+  .profile-email {
+    margin-top: 1.5rem;
+  }
+  
+  .email-label {
+    color: #8a2be2;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .email-value {
+    color: white;
+    font-size: 1.2rem;
+    word-break: break-all;
+  }
+  
+  .stats-container {
+    margin-bottom: 3rem;
+  }
+  
+  .stats-row {
+    gap: 1.5rem;
+    justify-content: center;
+  }
+  
+  .stat-card {
+    height: 100%;
+    border-radius: 15px;
+    background: rgba(34, 17, 51, 0.5);
+    backdrop-filter: blur(5px);
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-card.timeattack {
+    box-shadow: 0 0 20px rgba(0, 255, 127, 0.3);
+    border: 1px solid rgba(0, 255, 127, 0.2);
+  }
+  
+  .stat-card.survival {
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+    border: 1px solid rgba(255, 20, 147, 0.2);
+  }
+  
+  .stat-card.memory {
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+    border: 1px solid rgba(0, 191, 255, 0.2);
+  }
+  
+  .stat-card.scramble {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+  }
+  
+  .stat-card-body {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .stat-title {
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-card.timeattack .stat-title {
+    color: #00ff7f;
+  }
+  
+  .stat-card.survival .stat-title {
+    color: #ff1493;
+  }
+  
+  .stat-card.memory .stat-title {
+    color: #00bfff;
+  }
+  
+  .stat-card.scramble .stat-title {
+    color: #ffd700;
+  }
+  
+  .stat-value {
+    color: white;
+    font-weight: bold;
+    font-size: 3rem;
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .stat-card.timeattack .stat-value {
+    color: #00ff7f;
+  }
+  
+  .stat-card.survival .stat-value {
+    color: #ff1493;
+  }
+  
+  .stat-card.memory .stat-value {
+    color: #00bfff;
+  }
+  
+  .stat-card.scramble .stat-value {
+    color: #ffd700;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .profile-title {
+      font-size: 2rem;
+    }
+    
+    .profile-username {
+      font-size: 1.5rem;
+    }
+    
+    .stat-title {
+      font-size: 1rem;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+    }
+    
+    .stats-row {
+      gap: 1rem;
+    }
+    
+    .stat-card-body {
+      padding: 1.5rem;
+    }
+  }

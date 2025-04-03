@@ -3,17 +3,18 @@ import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
+import "./timeattack.css"; // New CSS file for custom styles
 
 const TimeAttack = () => {
     const [puzzleBg, setPuzzleBg] = useState("#1a1a1a");
     const [puzzleSolution, setPuzzleSolution] = useState(null);
     const [timeLeft, setTimeLeft] = useState(60);
     const [score, setScore] = useState(0);
-    const [gameActive, setGameActive] = useState(false); // Start with false for initial state
+    const [gameActive, setGameActive] = useState(false);
     const [message, setMessage] = useState("");
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [showGameOverModal, setShowGameOverModal] = useState(false);
-    const { user, updateSessionScore } = useSession(); // Accessing the user from session context
+    const { user, updateSessionScore } = useSession();
 
     const fetchPuzzleData = () => {
         fetch("https://marcconrad.com/uob/banana/api.php")
@@ -24,7 +25,7 @@ const TimeAttack = () => {
             })
             .catch(error => console.error("Error fetching puzzle data:", error));
     };
-    /*--------------here should be the place where u take the score to check database-------------*/
+
     const startNewGame = () => {
         setTimeLeft(60);
         setScore(0);
@@ -50,7 +51,7 @@ const TimeAttack = () => {
                 try {
                     const a = await updateScore(user.email, 'timeattack', score);
                     if (a) {
-                        updateSessionScore('timeattack', score); // Update session score
+                        updateSessionScore('timeattack', score);
                     }
                 } catch (error) {
                     console.error("Error updating score:", error);
@@ -77,22 +78,16 @@ const TimeAttack = () => {
     };
 
     return (
-        <Container fluid className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white p-0">
+        <Container fluid className="timeattack-container">
             {/* Start Game Screen */}
             {!gameActive && !showGameOverModal && (
-                <div className="text-center" style={{ maxWidth: "600px" }}>
-                    <h1 className="display-3 text-warning mb-4" style={{ textShadow: "0 0 15px #ffc107" }}>
+                <div className="start-screen">
+                    <h1 className="game-title">
                         ⏳ Time Attack Mode
                     </h1>
                     <Button
-                        variant="success"
-                        size="lg"
                         onClick={startNewGame}
-                        className="px-5 py-3 fw-bold"
-                        style={{
-                            boxShadow: "0 0 20px #20c997",
-                            fontSize: "1.5rem"
-                        }}
+                        className="start-button"
                     >
                         START GAME
                     </Button>
@@ -102,73 +97,48 @@ const TimeAttack = () => {
             {/* Game Active Screen */}
             {gameActive && (
                 <>
-                    {/* Header with glowing text */}
-                    <div className="text-center mb-4">
-                        <h1 className="display-4 text-warning mb-0" style={{ textShadow: "0 0 10px #ffc107" }}>
+                    <div className="game-header">
+                        <h1 className="game-title">
                             ⏳ Time Attack Mode
                         </h1>
                     </div>
 
-                    {/* Score & Timer - Glowing Cards */}
-                    <Row className="mb-4 w-75 justify-content-center">
+                    <Row className="stats-row">
                         <Col md={6} className="mb-3 mb-md-0">
-                            <div className="p-3 rounded bg-transparent border-0 text-center">
-                                <h3 className="text-info mb-0" style={{ textShadow: "0 0 8px #0dcaf0" }}>
+                            <div className="stat-box">
+                                <h3 className="time-left">
                                     Time Left: {timeLeft}s
                                 </h3>
                             </div>
                         </Col>
                         <Col md={6}>
-                            <div className="p-3 rounded bg-transparent border-0 text-center">
-                                <h3 className="text-success mb-0" style={{ textShadow: "0 0 8px #198754" }}>
+                            <div className="stat-box">
+                                <h3 className="score">
                                     Score: {score}
                                 </h3>
                             </div>
                         </Col>
                     </Row>
 
-                    {/* Puzzle Image with Glow */}
                     {puzzleBg && (
-                        <div className="mb-4" style={{
-                            maxWidth: "500px",
-                            boxShadow: "0 0 20px #ffc107",
-                            borderRadius: "10px",
-                            overflow: "hidden"
-                        }}>
+                        <div className="puzzle-container">
                             <img
                                 src={puzzleBg}
                                 alt="Puzzle"
-                                className="img-fluid p-3"
-                                style={{
-                                    filter: "invert(1)",
-                                    width: "100%",
-                                    display: "block"
-                                }}
+                                className="puzzle-image"
                             />
                         </div>
                     )}
 
-                    {/* Number Buttons 0-9 with Glow */}
-                    <div className="mb-4 w-75">
-                        <Row className="g-2 justify-content-center">
+                    <div className="buttons-container">
+                        <Row className="buttons-row">
                             {[...Array(10)].map((_, index) => {
                                 const answer = index;
                                 return (
                                     <Col xs="auto" key={answer}>
                                         <Button
                                             onClick={() => checkSolution(answer)}
-                                            variant={selectedAnswer === answer ? "warning" : "danger"}
-                                            size="lg"
-                                            className="fw-bold px-4 py-2"
-                                            style={{
-                                                boxShadow: `
-                          ${selectedAnswer === answer ?
-                                                        "0 0 15px #ffc107" :
-                                                        "0 0 10px #dc3545"}
-                        `,
-                                                transition: "all 0.3s ease",
-                                                border: "none"
-                                            }}
+                                            className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
                                         >
                                             {answer}
                                         </Button>
@@ -178,21 +148,8 @@ const TimeAttack = () => {
                         </Row>
                     </div>
 
-                    {/* Message Alert with Glow */}
                     {message && (
-                        <Alert
-                            variant={message.includes("✔️") ? "success" : "danger"}
-                            className="mt-3 w-75 text-center fw-bold border-0"
-                            style={{
-                                boxShadow: `
-                  ${message.includes("✔️") ?
-                                        "0 0 15px #198754" :
-                                        "0 0 15px #dc3545"}
-                `,
-                                background: "rgba(25, 135, 84, 0.2)",
-                                backdropFilter: "blur(5px)"
-                            }}
-                        >
+                        <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
                             {message}
                         </Alert>
                     )}
@@ -205,25 +162,19 @@ const TimeAttack = () => {
                 onHide={() => setShowGameOverModal(false)}
                 centered
                 backdrop="static"
-                className="text-white"
+                className="game-over-modal"
             >
-                <Modal.Body className="bg-dark border border-warning rounded">
-                    <div className="text-center p-4">
-                        <h2 className="text-warning mb-4" style={{ textShadow: "0 0 10px #ffc107" }}>
+                <Modal.Body className="modal-content">
+                    <div className="modal-body-content">
+                        <h2 className="modal-title">
                             Game Over!
                         </h2>
-                        <h3 className="text-info mb-4">
-                            Your final score: <span style={{ color: "#20c997" }}>{score}</span>
+                        <h3 className="modal-score">
+                            Your final score: <span>{score}</span>
                         </h3>
                         <Button
-                            variant="success"
-                            size="lg"
                             onClick={startNewGame}
-                            className="px-5 py-2 fw-bold"
-                            style={{
-                                boxShadow: "0 0 15px #20c997",
-                                fontSize: "1.2rem"
-                            }}
+                            className="play-again-button"
                         >
                             Play Again
                         </Button>

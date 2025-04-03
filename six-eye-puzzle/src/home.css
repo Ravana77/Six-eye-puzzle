@@ -9,7 +9,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(20, 0, 40, 0.7);
+    pointer-events: none;
     z-index: 0;
   }
   
