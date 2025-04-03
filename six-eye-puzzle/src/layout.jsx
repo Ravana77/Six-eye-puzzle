@@ -82,7 +82,7 @@ const Footer = () => {
                 <p className="mb-1 small">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
                 <p className="mb-1 small">Game Version – Version 1.0.0</p>
                 <p className="mb-1 small">Contact Information – chillehasindu123@gmail.com</p>
-                <p className="mb-1 small">Developer Credit – Developed by Ranasinghe H.R</p>
+                <p className="mb-1 small">Developer Credit – Developed by Ranasinghege H.R</p>
                 <p className="mb-0 small">"Challenge your mind with Six-Eye Puzzle!"</p>
             </div>
         </footer>
@@ -91,9 +91,9 @@ const Footer = () => {
 
 const Layout = () => {
     return (
-        <div className="abcd text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
+        <div className="text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
             <Header />
-            <main className="py-4 flex-grow-1">
+            <main className="abcd py-4 flex-grow-1">
                 <Outlet />
             </main>
             <Footer />

@@ -98,6 +98,6 @@
     background-image: url('../public/neon-skyscrapers.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll;
     position: relative;
   }
