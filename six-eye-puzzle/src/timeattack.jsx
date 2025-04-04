@@ -3,7 +3,8 @@ import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
-import "./timeattack.css"; // New CSS file for custom styles
+import "./timeattack.css";
+import { Link } from "react-router-dom";
 
 const TimeAttack = () => {
     const [puzzleBg, setPuzzleBg] = useState("#1a1a1a");
@@ -96,64 +97,66 @@ const TimeAttack = () => {
 
             {/* Game Active Screen */}
             {gameActive && (
-                <>
-                    <div className="game-header">
-                        <h1 className="game-title">
-                            ⏳ Time Attack Mode
-                        </h1>
-                    </div>
-
-                    <Row className="stats-row">
-                        <Col md={6} className="mb-3 mb-md-0">
-                            <div className="stat-box">
-                                <h3 className="time-left">
-                                    Time Left: {timeLeft}s
-                                </h3>
-                            </div>
-                        </Col>
-                        <Col md={6}>
-                            <div className="stat-box">
-                                <h3 className="score">
-                                    Score: {score}
-                                </h3>
-                            </div>
-                        </Col>
-                    </Row>
-
-                    {puzzleBg && (
-                        <div className="puzzle-container">
-                            <img
-                                src={puzzleBg}
-                                alt="Puzzle"
-                                className="puzzle-image"
-                            />
+                <div className="game-content-container">
+                    <div className="game-content">
+                        <div className="game-header">
+                            <h1 className="game-title">
+                                ⏳ Time Attack Mode
+                            </h1>
                         </div>
-                    )}
 
-                    <div className="buttons-container">
-                        <Row className="buttons-row">
-                            {[...Array(10)].map((_, index) => {
-                                const answer = index;
-                                return (
-                                    <Col xs="auto" key={answer}>
-                                        <Button
-                                            onClick={() => checkSolution(answer)}
-                                            className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
-                                        >
-                                            {answer}
-                                        </Button>
-                                    </Col>
-                                );
-                            })}
+                        <Row className="stats-row">
+                            <Col md={6} className="mb-3 mb-md-0">
+                                <div className="stat-box">
+                                    <h3 className="time-left">
+                                        Time Left: {timeLeft}s
+                                    </h3>
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <div className="stat-box">
+                                    <h3 className="score">
+                                        Score: {score}
+                                    </h3>
+                                </div>
+                            </Col>
                         </Row>
-                    </div>
 
-                    {message && (
-                        <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-                            {message}
-                        </Alert>
-                    )}
-                </>
+                        {puzzleBg && (
+                            <div className="puzzle-container">
+                                <img
+                                    src={puzzleBg}
+                                    alt="Puzzle"
+                                    className="puzzle-image"
+                                />
+                            </div>
+                        )}
+
+                        <div className="buttons-container">
+                            <Row className="buttons-row">
+                                {[...Array(10)].map((_, index) => {
+                                    const answer = index;
+                                    return (
+                                        <Col xs="auto" key={answer}>
+                                            <Button
+                                                onClick={() => checkSolution(answer)}
+                                                className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
+                                            >
+                                                {answer}
+                                            </Button>
+                                        </Col>
+                                    );
+                                })}
+                            </Row>
+                        </div>
+
+                        {message && (
+                            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
+                                {message}
+                            </Alert>
+                        )}
+                    </div>
+                </div>
             )}
 
             {/* Game Over Modal */}
@@ -172,12 +175,21 @@ const TimeAttack = () => {
                         <h3 className="modal-score">
                             Your final score: <span>{score}</span>
                         </h3>
-                        <Button
-                            onClick={startNewGame}
-                            className="play-again-button"
-                        >
-                            Play Again
-                        </Button>
+                        <div className="modal-buttons">
+                            <Button
+                                onClick={startNewGame}
+                                className="play-again-button"
+                            >
+                                Play Again
+                            </Button>
+                            <Button
+                                as={Link}
+                                to="/rank"
+                                className="ranking-button"
+                            >
+                                Quit
+                            </Button>
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>

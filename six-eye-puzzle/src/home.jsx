@@ -18,7 +18,7 @@ function Home() {
           href="/rank"
           className="btn game-btn rank-btn w-100 py-5"
         >
-          Rank
+          Challenger
         </a>
       </div>
 

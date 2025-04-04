@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import './App.css'; // Importing custom CSS for alignment fixes
-import { checkUser, addUser } from './firebase'; // Importing the checkUser function from firebase.js
-import { useSession } from './sessionContext'; // Importing the session context
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './signup.css'; // New CSS file
+import { checkUser, addUser } from './firebase';
+import { useSession } from './sessionContext';
+import { Link } from "react-router-dom";
 
 function SignUp() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, logout } = useSession(); // Accessing the login function from session context
+  const { login, logout } = useSession();
 
-  // Handle the sign-up button hover state for glowing effect
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveredSignIn, setIsHoveredSignIn] = useState(false);
 
@@ -20,17 +19,15 @@ function SignUp() {
     e.preventDefault();
     try {
       console.log('Signed Up:', username, email, password);
-      // Check for user existing first
       const userExists = checkUser(username, password, login, logout, 'test');
       if (userExists === true) {
         alert('Username already exists. Please choose a different one.');
         return;
       }
       else {
-        // Add the user to the database
-        addUser(username, email, password,login,logout).then(() => {
+        addUser(username, email, password, login, logout).then(() => {
           alert('Sign-up successful! Redirecting to home page...');
-          window.location.href = '/home'; // Redirect to home page after sign-up
+          window.location.href = '/home';
         }).catch((error) => {
           console.error('Error adding user:', error);
           alert('An error occurred. Please try again later.');
@@ -43,133 +40,109 @@ function SignUp() {
     }
   };
 
-  // Inline styles for the glowing effect, zooming effect, and button appearance
-  const glowingStyle = {
-    transition: 'all 0.3s ease',
-    backgroundColor: isHovered ? '#ff007f' : '#ff4d4d', // Pink on hover, bright red as default
-    boxShadow: isHovered ? '0 0 15px rgba(255, 0, 127, 0.7)' : 'none',
-    borderColor: isHovered ? '#ff007f' : '#ff4d4d',
-    color: '#fff', // White text
-    transform: isHovered ? 'scale(1.1)' : 'scale(1)', // Zoom effect on hover
-  };
-
-  const glowingSignInStyle = {
-    transition: 'all 0.3s ease',
-    backgroundColor: isHoveredSignIn ? '#00ff7f' : '#4d94ff', // Green on hover, bright blue as default
-    boxShadow: isHoveredSignIn ? '0 0 15px rgba(0, 255, 127, 0.7)' : 'none',
-    borderColor: isHoveredSignIn ? '#00ff7f' : '#4d94ff',
-    color: '#fff', // White text
-    transform: isHoveredSignIn ? 'scale(1.1)' : 'scale(1)', // Zoom effect on hover
-  };
-
   return (
-    <div style={{ backgroundColor: '#000', height: '100vh' }}>
-
-      {/* Header Section */}
-      <header className="bg-dark text-white text-center py-4">
+    <div className="signup-container crt-effect">
+      <header className="signup-header">
         <div className="container">
           <div className="row align-items-center">
-            <div className="col-2">
-              <img src="/logo.png" alt="Game Logo" width="400" height="auto" style={{ filter: "invert(1)" }} />
+            <div className="col-4 col-md-2 order-1">
+              <img 
+                src="/logo.png" 
+                alt="Game Logo" 
+                className="img-fluid d-none d-md-block signup-logo" 
+              />
             </div>
-            <div className="col-8">
-              <h1 className="display-4 text-primary fw-bold text-uppercase"
-                style={{
-                  fontFamily: "Orbitron, sans-serif",
-                  color: "#001f3f",
-                  WebkitTextStroke: "1px white",
-                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)"
-                }}>Six Eye Puzzle</h1>
-              <p className="lead text-warning fw-bold text-uppercase text-center"
-                style={{
-                  fontFamily: "Orbitron, sans-serif",
-                  textShadow: "2px 2px 8px rgba(255, 165, 0, 0.8)"
-                }}>
-                Unleash Your Inner Braniac
+            <div className="col-12 col-md-8 order-3 order-md-2 mt-2 mt-md-0">
+              <h1 className="signup-title">
+                Six Eye Puzzle
+              </h1>
+              <p className="signup-subtitle">
+                Unleash Your Inner Brainiac
               </p>
+            </div>
+            <div className="col-8 col-md-2 order-2 order-md-3 text-end">
+              {/* Placeholder */}
             </div>
           </div>
         </div>
       </header>
 
-      {/* SignUp Form Section */}
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <Row className="justify-content-center w-100">
-          <Col md={6} lg={4} className="bg-dark p-5 rounded shadow-lg">
-            <h2 className="text-center text-white mb-4" style={{ fontFamily: 'Press Start 2P, cursive' }}> Sign Up</h2>
-            <Form onSubmit={handleSignUp}>
-              <Form.Group className="mb-3">
-                <Form.Label className="text-white">Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  style={{ backgroundColor: '#444', color: '#fff', borderColor: '#444' }} // Dark input background
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="text-white">Email Address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{ backgroundColor: '#444', color: '#fff', borderColor: '#444' }} // Dark input background
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label className="text-white">Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  style={{ backgroundColor: '#444', color: '#fff', borderColor: '#444' }} // Dark input background
-                />
-              </Form.Group>
-              <Button
-                variant="primary"
-                type="submit"
-                block
-                className="w-100"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                style={glowingStyle}
-                onClick={handleSignUp} // Redirect to home page after sign-up
-              >
-                Sign Up
-              </Button>
-            </Form>
-            <div className="text-center mt-3">
-              <span className="text-white">
+      <main className="signup-main">
+        <Container>
+          <Row className="justify-content-center">
+            <Col md={6} lg={4} className="signup-form-container">
+              <h2 className="signup-form-title">Sign Up</h2>
+              <Form onSubmit={handleSignUp}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Username</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="signup-input"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="signup-input"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="signup-input"
+                  />
+                </Form.Group>
                 <Button
-                  variant="link"
-                  className="text-light"
-                  style={{ ...glowingSignInStyle, fontSize: '16px', textDecoration: 'none' }}
+                  variant="primary"
+                  type="submit"
+                  className="w-100 mb-3 signup-button"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  style={{
+                    '--hover-state': isHovered ? 1 : 0
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Form>
+              <div className="text-center">
+                <Link
+                  to="/login"
+                  className="signup-signin-link"
                   onMouseEnter={() => setIsHoveredSignIn(true)}
                   onMouseLeave={() => setIsHoveredSignIn(false)}
-                  onClick={() => window.location.href = '/login'}
+                  style={{
+                    '--hover-state': isHoveredSignIn ? 1 : 0
+                  }}
                 >
                   Already have an account? Sign In
-                </Button>
-              </span>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+                </Link>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </main>
 
-      {/* Footer Section */}
-      <footer className="bg-dark text-white text-center py-4">
+      <footer className="signup-footer">
         <div className="container">
-          <p className="mb-1">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
-          <p className="mb-1">Game Version – Version 1.0.0</p>
-          <p className="mb-1">Contact Information – chillehasindu123@gmail.com</p>
-          <p className="mb-1">Developer Credit – Developed by Ranasinghe H.R</p>
-          <p className="mb-0">Tagline/Slogan (Optional) – "Challenge your mind with Six-Eye Puzzle!"</p>
+          <p className="mb-1 small">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
+          <p className="mb-1 small">Game Version – Version 1.0.0</p>
+          <p className="mb-1 small">Contact Information – chillehasindu123@gmail.com</p>
+          <p className="mb-1 small">Developer Credit – Developed by Ranasinghege H.R</p>
+          <p className="mb-0 small">"Challenge your mind with Six-Eye Puzzle!"</p>
         </div>
       </footer>
-
     </div>
   );
 }
