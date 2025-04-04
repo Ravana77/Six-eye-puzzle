@@ -17,6 +17,7 @@ const TimeAttack = () => {
     const [showGameOverModal, setShowGameOverModal] = useState(false);
     const { user, updateSessionScore } = useSession();
 
+    // Fetches puzzle data (question and solution) from an external API
     const fetchPuzzleData = () => {
         fetch("https://marcconrad.com/uob/banana/api.php")
             .then(response => response.json())
@@ -27,6 +28,7 @@ const TimeAttack = () => {
             .catch(error => console.error("Error fetching puzzle data:", error));
     };
 
+    // Starts a new game by resetting the state and fetching a new puzzle
     const startNewGame = () => {
         setTimeLeft(60);
         setScore(0);
@@ -37,6 +39,7 @@ const TimeAttack = () => {
         setShowGameOverModal(false);
     };
 
+    // Handles the countdown timer when the game is active
     useEffect(() => {
         if (gameActive) {
             const timer = setInterval(() => {
@@ -46,6 +49,7 @@ const TimeAttack = () => {
         }
     }, [gameActive]);
 
+    // Handles the end of the game when the timer reaches 0
     useEffect(() => {
         if (timeLeft === 0 && gameActive) {
             const updateGameScore = async () => {
@@ -64,6 +68,7 @@ const TimeAttack = () => {
         }
     }, [timeLeft, gameActive]);
 
+    // Checks if the selected answer is correct or incorrect
     const checkSolution = (answer) => {
         if (!gameActive) return;
         setSelectedAnswer(answer);
@@ -159,7 +164,7 @@ const TimeAttack = () => {
                 </div>
             )}
 
-            {/* Game Over Modal */}
+            {/* Game finish pop up screen */}
             <Modal
                 show={showGameOverModal}
                 onHide={() => setShowGameOverModal(false)}

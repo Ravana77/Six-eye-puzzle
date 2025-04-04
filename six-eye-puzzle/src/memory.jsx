@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
-import "./memory.css"; // New CSS file for custom styles
+import "./memory.css"; 
 
 const Memory = () => {
   const [puzzleBg, setPuzzleBg] = useState(null);
@@ -17,6 +17,7 @@ const Memory = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const { user, updateSessionScore } = useSession();
 
+  // Fetches puzzle data the image and the solution from banana api 
   const fetchPuzzleData = () => {
     fetch("https://marcconrad.com/uob/banana/api.php")
       .then(response => response.json())
@@ -30,6 +31,7 @@ const Memory = () => {
       .catch(error => console.error("Error fetching puzzle data:", error));
   };
 
+  // restart new game , refresh old game 
   const startNewGame = () => {
     setCurrentStreak(0);
     setTimeLimit(5000);
@@ -39,11 +41,13 @@ const Memory = () => {
     setShowScoreModal(false);
   };
 
+  // Checking the answer
   const checkSolution = (answer) => {
     if (!gameActive || showImage) return;
     
     setSelectedAnswer(answer);
     if (answer === puzzleSolution) {
+      // if answer is wrong
       const newStreak = currentStreak + 1;
       setCurrentStreak(newStreak);
       setMessage("✔️ Correct! +1 to streak");
@@ -54,6 +58,7 @@ const Memory = () => {
         fetchPuzzleData();
       }, 1000);
     } else {
+      // if answer is correct
       setMessage("❌ Incorrect! Game Over");
       setTimeout(() => {
         const updateGameScore = async () => {

@@ -28,6 +28,7 @@ const Survival = () => {
             })
             .catch(error => console.error("Error fetching puzzle data:", error));
     };
+    
 
     const startNewGame = () => {
         setLives(3);

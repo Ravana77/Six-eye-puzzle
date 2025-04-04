@@ -130,7 +130,12 @@ const Profile = () => {
           </Col>
         </Row>
         <div className="logout-container text-center mt-4 mb-4">
-          <button onClick={handlelogout} className="logout-button">Log Out</button>
+          <button
+            onClick={handlelogout}
+            className="logout-button bg-danger text-white rounded-3 border-0 px-4 py-3"
+          >
+            Log Out
+          </button>
         </div>
       </Container>
     </Container>
