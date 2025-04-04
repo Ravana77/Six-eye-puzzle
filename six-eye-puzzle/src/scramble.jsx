@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
-import "./scramble.css"; // New CSS file for custom styles
+import "./scramble.css";
 
 const Scramble = () => {
   const [puzzleBg, setPuzzleBg] = useState(null);
@@ -115,61 +115,63 @@ const Scramble = () => {
 
       {/* Game Active Screen */}
       {gameActive && (
-        <>
-          <div className="game-header">
-            <h1 className="game-title">
-              🔀 Scramble Mode
-            </h1>
-          </div>
-
-          <Row className="stats-row">
-            <Col md={6} className="mb-3 mb-md-0">
-              <div className="stat-box">
-                <h3 className="timer-display">
-                  Time Left: {timer}s
-                </h3>
-              </div>
-            </Col>
-            <Col md={6}>
-              <div className="stat-box">
-                <h3 className="streak-display">
-                  Streak: {streak}x
-                </h3>
-              </div>
-            </Col>
-          </Row>
-
-          {puzzleBg && (
-            <div className="puzzle-container">
-              <img
-                src={puzzleBg}
-                alt="Puzzle"
-                className="puzzle-image"
-              />
+        <div className="game-content-container">
+          <div className="game-content">
+            <div className="game-header">
+              <h1 className="game-title">
+                🔀 Scramble Mode
+              </h1>
             </div>
-          )}
 
-          <div className="number-buttons-container">
-            <Row className="number-buttons-row">
-              {shuffledNumbers.map((num) => (
-                <Col xs="auto" key={num}>
-                  <Button
-                    onClick={() => handleNumberClick(num)}
-                    className="number-button"
-                  >
-                    {num}
-                  </Button>
-                </Col>
-              ))}
+            <Row className="stats-row">
+              <Col md={6} className="mb-3 mb-md-0">
+                <div className="stat-box">
+                  <h3 className="timer-display">
+                    Time Left: {timer}s
+                  </h3>
+                </div>
+              </Col>
+              <Col md={6}>
+                <div className="stat-box">
+                  <h3 className="streak-display">
+                    Streak: {streak}x
+                  </h3>
+                </div>
+              </Col>
             </Row>
-          </div>
 
-          {message && (
-            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-              {message}
-            </Alert>
-          )}
-        </>
+            {puzzleBg && (
+              <div className="puzzle-container">
+                <img
+                  src={puzzleBg}
+                  alt="Puzzle"
+                  className="puzzle-image"
+                />
+              </div>
+            )}
+
+            <div className="number-buttons-container">
+              <Row className="number-buttons-row">
+                {shuffledNumbers.map((num) => (
+                  <Col xs="auto" key={num}>
+                    <Button
+                      onClick={() => handleNumberClick(num)}
+                      className="number-button"
+                    >
+                      {num}
+                    </Button>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+
+            {message && (
+              <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
+                {message}
+              </Alert>
+            )}
+          </div>
+        </div>
       )}
 
       <Modal 
@@ -190,12 +192,20 @@ const Scramble = () => {
             <h4 className="modal-subtitle">
               Your total score
             </h4>
-            <Button 
-              onClick={startNewGame}
-              className="play-again-button"
-            >
-              Play Again
-            </Button>
+            <div className="modal-buttons">
+              <Button 
+                onClick={startNewGame}
+                className="play-again-button"
+              >
+                Play Again
+              </Button>
+              <Button 
+                href="/rank"
+                className="ranking-button"
+              >
+                QUIT
+              </Button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>

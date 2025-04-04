@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { updateScore } from "./firebase";
 import { useSession } from "./sessionContext";
-import "./survival.css"; // New CSS file for custom styles
+import "./survival.css";
 
 const Survival = () => {
     const [puzzleBg, setPuzzleBg] = useState("#1a1a1a");
@@ -108,64 +108,66 @@ const Survival = () => {
 
             {/* Game Active Screen */}
             {gameActive && (
-                <>
-                    <div className="game-header">
-                        <h1 className="game-title">
-                            🛡️ Survival Mode
-                        </h1>
-                    </div>
-
-                    <Row className="stats-row">
-                        <Col md={6} className="mb-3 mb-md-0">
-                            <div className="stat-box">
-                                <h3 className="lives-display">
-                                    Lives: {"❤️".repeat(lives)}
-                                </h3>
-                            </div>
-                        </Col>
-                        <Col md={6}>
-                            <div className="stat-box">
-                                <h3 className="timer-display">
-                                    Time Left: {timeLeft}s
-                                </h3>
-                            </div>
-                        </Col>
-                    </Row>
-
-                    {puzzleBg && (
-                        <div className="puzzle-container">
-                            <img
-                                src={puzzleBg}
-                                alt="Puzzle"
-                                className="puzzle-image"
-                            />
+                <div className="game-content-container">
+                    <div className="game-content">
+                        <div className="game-header">
+                            <h1 className="game-title">
+                                🛡️ Survival Mode
+                            </h1>
                         </div>
-                    )}
 
-                    <div className="number-buttons-container">
-                        <Row className="number-buttons-row">
-                            {[...Array(10)].map((_, index) => {
-                                const answer = index;
-                                return (
-                                    <Col xs="auto" key={answer}>
-                                        <Button
-                                            onClick={() => checkSolution(answer)}
-                                            className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
-                                        >
-                                            {answer}
-                                        </Button>
-                                    </Col>
-                                );
-                            })}
+                        <Row className="stats-row">
+                            <Col md={6} className="mb-3 mb-md-0">
+                                <div className="stat-box">
+                                    <h3 className="lives-display">
+                                        Lives: {"❤️".repeat(lives)}
+                                    </h3>
+                                </div>
+                            </Col>
+                            <Col md={6}>
+                                <div className="stat-box">
+                                    <h3 className="timer-display">
+                                        Time Left: {timeLeft}s
+                                    </h3>
+                                </div>
+                            </Col>
                         </Row>
-                    </div>
 
-                    {message && (
-                        <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-                            {message}
-                        </Alert>
-                    )}
-                </>
+                        {puzzleBg && (
+                            <div className="puzzle-container">
+                                <img
+                                    src={puzzleBg}
+                                    alt="Puzzle"
+                                    className="puzzle-image"
+                                />
+                            </div>
+                        )}
+
+                        <div className="number-buttons-container">
+                            <Row className="number-buttons-row">
+                                {[...Array(10)].map((_, index) => {
+                                    const answer = index;
+                                    return (
+                                        <Col xs="auto" key={answer}>
+                                            <Button
+                                                onClick={() => checkSolution(answer)}
+                                                className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
+                                            >
+                                                {answer}
+                                            </Button>
+                                        </Col>
+                                    );
+                                })}
+                            </Row>
+                        </div>
+
+                        {message && (
+                            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
+                                {message}
+                            </Alert>
+                        )}
+                    </div>
+                </div>
             )}
 
             <Modal
@@ -183,12 +185,20 @@ const Survival = () => {
                         <h3 className="modal-score">
                             Score: {score}
                         </h3>
-                        <Button
-                            onClick={startNewGame}
-                            className="play-again-button"
-                        >
-                            Play Again
-                        </Button>
+                        <div className="modal-buttons">
+                            <Button
+                                onClick={startNewGame}
+                                className="play-again-button"
+                            >
+                                Play Again
+                            </Button>
+                            <Button
+                                href="/rank"
+                                className="ranking-button"
+                            >
+                                QUIT
+                            </Button>
+                        </div>
                     </div>
                 </Modal.Body>
             </Modal>

@@ -95,66 +95,68 @@ const Memory = () => {
 
       {/* Game Active Screen */}
       {gameActive && (
-        <>
-          <div className="game-header">
-            <h1 className="game-title">
-              🧠 Memory Mode
-            </h1>
-          </div>
+        <div className="game-content-container">
+          <div className="game-content">
+            <div className="game-header">
+              <h1 className="game-title">
+                🧠 Memory Mode
+              </h1>
+            </div>
 
-          <div className="streak-display">
-            <h3 className="streak-text">
-              Current Streak: {currentStreak}
-            </h3>
-          </div>
+            <div className="streak-display">
+              <h3 className="streak-text">
+                Current Streak: {currentStreak}
+              </h3>
+            </div>
 
-          <div className="puzzle-display">
-            {showImage && puzzleBg ? (
-              <div className="puzzle-image-container">
-                <img
-                  src={puzzleBg}
-                  alt="Memory Puzzle"
-                  className="puzzle-image"
-                />
-              </div>
-            ) : (
-              <div className="hidden-puzzle">
-                <div className="question-mark">
-                  ?
+            <div className="puzzle-display">
+              {showImage && puzzleBg ? (
+                <div className="puzzle-image-container">
+                  <img
+                    src={puzzleBg}
+                    alt="Memory Puzzle"
+                    className="puzzle-image"
+                  />
                 </div>
-                <h3 className="prompt-text">
-                  What was the number?
-                </h3>
-              </div>
+              ) : (
+                <div className="hidden-puzzle">
+                  <div className="question-mark">
+                    ?
+                  </div>
+                  <h3 className="prompt-text">
+                    What was the number?
+                  </h3>
+                </div>
+              )}
+            </div>
+
+            <div className="number-buttons-container">
+              <Row className="number-buttons-row">
+                {[...Array(10)].map((_, index) => {
+                  const answer = index;
+                  return (
+                    <Col xs="auto" key={answer}>
+                      <Button
+                        onClick={() => checkSolution(answer)}
+                        disabled={showImage}
+                        className={`number-button ${selectedAnswer === answer ? 
+                          (answer === puzzleSolution ? 'correct' : 'incorrect') : ''}`}
+                      >
+                        {answer}
+                      </Button>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
+
+            {message && (
+              <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
+                {message}
+              </Alert>
             )}
           </div>
-
-          <div className="number-buttons-container">
-            <Row className="number-buttons-row">
-              {[...Array(10)].map((_, index) => {
-                const answer = index;
-                return (
-                  <Col xs="auto" key={answer}>
-                    <Button
-                      onClick={() => checkSolution(answer)}
-                      disabled={showImage}
-                      className={`number-button ${selectedAnswer === answer ? 
-                        (answer === puzzleSolution ? 'correct' : 'incorrect') : ''}`}
-                    >
-                      {answer}
-                    </Button>
-                  </Col>
-                );
-              })}
-            </Row>
-          </div>
-
-          {message && (
-            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-              {message}
-            </Alert>
-          )}
-        </>
+        </div>
       )}
 
       <Modal 
@@ -175,12 +177,20 @@ const Memory = () => {
             <h4 className="modal-subtitle">
               Correct answers in a row
             </h4>
-            <Button 
-              onClick={startNewGame}
-              className="play-again-button"
-            >
-              Play Again
-            </Button>
+            <div className="modal-buttons">
+              <Button 
+                onClick={startNewGame}
+                className="play-again-button"
+              >
+                Play Again
+              </Button>
+              <Button 
+                href="/rank"
+                className="ranking-button"
+              >
+                QUIT
+              </Button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
