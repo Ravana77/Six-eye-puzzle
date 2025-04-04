@@ -4,8 +4,9 @@ import { useSession } from './sessionContext';
 import { fetchProfile } from './firebase'; 
 import './profile.css';
 
+
 const Profile = () => {
-  const { user } = useSession();
+  const { user, logout } = useSession();
   const [userProfile, setUserProfile] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
@@ -32,6 +33,12 @@ const Profile = () => {
       </Container>
     );
   }
+
+  //handlogout, perform logout and clear session storage and redirect to login page
+  const handlelogout = () => {
+    logout(); // Call the logout function to clear session storage
+    window.location.href = '/login'; // Redirect to login page after logout
+  };
 
   return (
     <Container fluid className="profile-container">
@@ -122,6 +129,9 @@ const Profile = () => {
             </Card>
           </Col>
         </Row>
+        <div className="logout-container text-center mt-4 mb-4">
+          <button onClick={handlelogout} className="logout-button">Log Out</button>
+        </div>
       </Container>
     </Container>
   );
