@@ -15,9 +15,9 @@ function HowToPlay() {
           <div className="mode-card classic">
             <h3 className="mode-title">Classic Mode</h3>
             <ul className="mode-instructions">
-              <li>Solve math puzzles at your own pace</li>
-              <li>Type your answer in the input field</li>
-              <li>Get instant feedback on your solution</li>
+              <li>classic mode has 2 modes </li>
+              <li>think and answer no restriction</li>
+              <li>there is a time limit of 10 s to answer</li>
               <li>Perfect for relaxed, thoughtful gameplay</li>
             </ul>
           </div>
@@ -27,7 +27,7 @@ function HowToPlay() {
             <ul className="mode-instructions">
               <li>Race against a 60-second timer</li>
               <li>Each correct answer adds 5 seconds</li>
-              <li>Score depends on how many puzzles you solve</li>
+              <li>each wrong answer reduces 5 seconds</li>
               <li>Test your speed and accuracy</li>
             </ul>
           </div>
@@ -47,8 +47,8 @@ function HowToPlay() {
             <ul className="mode-instructions">
               <li>Puzzle disappears after 5 seconds</li>
               <li>Remember the solution from memory</li>
-              <li>Build a streak for bonus points</li>
-              <li>Time decreases as your streak grows</li>
+              <li>Build a streak for greater score</li>
+              <li>Highest streak wins</li>
             </ul>
           </div>
           
@@ -58,7 +58,7 @@ function HowToPlay() {
               <li>Numbers appear in random order</li>
               <li>Reconstruct the correct solution</li>
               <li>10-second time limit per puzzle</li>
-              <li>Score multiplies with each correct answer</li>
+              <li>Increase the streak to Increase your highest score</li>
             </ul>
           </div>
         </div>
