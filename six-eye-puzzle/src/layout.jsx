@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, Outlet } from "react-router-dom";
 import './layout.css';
@@ -76,15 +77,42 @@ const Header = () => {
 };
 
 const Footer = () => {
+    const [quote, setQuote] = useState("");
+
+    useEffect(() => {
+        const fetchQuote = async () => {
+            try {
+                const response = await fetch("https://api.chucknorris.io/jokes/random");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data && data.value) { // Adjusted to use 'value' instead of 'text'
+                    setQuote(data.value);
+                } else {
+                    setQuote("Challenge your mind with Six-Eye Puzzle!"); // Fallback quote
+                }
+            } catch (error) {
+                console.error("Error fetching quote:", error);
+                setQuote("Challenge your mind with Six-Eye Puzzle!"); // Fallback quote
+            }
+        };
+
+        fetchQuote();
+    }, []);
+    
     return (
         <footer className="bg-black text-neon-secondary text-center py-3 border-top border-neon">
-            <div className="container">
+            <div>
+            <h3 className="mb-1 large">{quote}</h3>
+            </div>
+            {/* <div className="container">
                 <p className="mb-1 small">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
                 <p className="mb-1 small">Game Version – Version 1.0.0</p>
                 <p className="mb-1 small">Contact Information – chillehasindu123@gmail.com</p>
                 <p className="mb-1 small">Developer Credit – Developed by Ranasinghege H.R</p>
                 <p className="mb-0 small">"Challenge your mind with Six-Eye Puzzle!"</p>
-            </div>
+            </div> */}
         </footer>
     );
 };
