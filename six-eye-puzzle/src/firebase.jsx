@@ -4,7 +4,7 @@ import { getDatabase, ref, push, set } from "firebase/database";
 import { get, child } from "firebase/database";
 import { useContext } from "react";
 
-// Your web app's Firebase configuration
+//  Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD4WGV-Fkl15gaZrInVSoPcDlotMs72Wl8",
   authDomain: "six-eye-puzzle.firebaseapp.com",
@@ -16,13 +16,13 @@ const firebaseConfig = {
   databaseURL: "https://six-eye-puzzle-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
-// Initialize Firebase
+// start Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Create a reference to the "users" path in the Realtime Database
+// take user from Realtime Database
 const usersRef = ref(database, 'users');
-// Creates a reference to overall database
+
 const dbRef = ref(database);
 
 async function getAllUsers() {

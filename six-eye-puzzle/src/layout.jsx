@@ -78,9 +78,9 @@ const Header = () => {
 
 const Footer = () => {
     const [quote, setQuote] = useState("");
-
+/*chuck noris joke api */
     useEffect(() => {
-        const fetchQuote = async () => {
+        const fetchQuote = async () => {    
             try {
                 const response = await fetch("https://api.chucknorris.io/jokes/random");
                 if (!response.ok) {

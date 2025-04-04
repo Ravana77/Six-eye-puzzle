@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './signup.css'; // New CSS file
+import './signup.css'; 
 import { checkUser, addUser } from './firebase';
 import { useSession } from './sessionContext';
 import { Link } from "react-router-dom";
@@ -14,7 +14,7 @@ function SignUp() {
 
   const [isHovered, setIsHovered] = useState(false);
   const [isHoveredSignIn, setIsHoveredSignIn] = useState(false);
-
+/* sign up functition*/
   const handleSignUp = (e) => {
     e.preventDefault();
     try {
