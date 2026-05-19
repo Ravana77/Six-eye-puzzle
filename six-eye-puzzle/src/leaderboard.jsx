@@ -15,10 +15,12 @@ const Leaderboard = () => {
 
     useEffect(() => {
         handleScore();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         handleScore();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameType]);
 
     return (

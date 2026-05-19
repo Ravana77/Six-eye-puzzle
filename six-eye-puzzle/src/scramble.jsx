@@ -49,6 +49,7 @@ const Scramble = () => {
     } else if (gameActive && timer === 0) {
       handleWrongAnswer();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer, gameActive]);
 
   const shuffleNumbers = () => {

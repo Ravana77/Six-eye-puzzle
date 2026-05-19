@@ -66,6 +66,7 @@ const TimeAttack = () => {
             setGameActive(false);
             setShowGameOverModal(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timeLeft, gameActive]);
 
     // Checks if the selected answer is correct or incorrect

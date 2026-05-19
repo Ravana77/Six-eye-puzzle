@@ -2,7 +2,6 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, set } from "firebase/database";
 import { get, child } from "firebase/database";
-import { useContext } from "react";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,8 +21,6 @@ const database = getDatabase(app);
 
 // Create a reference to the "users" path in the Realtime Database
 const usersRef = ref(database, 'users');
-// Creates a reference to overall database
-const dbRef = ref(database);
 
 async function getAllUsers() {
   const dbRef = ref(database);
@@ -75,8 +72,6 @@ async function addUser(name, email, password, login, logout) {
     return false; // Invalid email format
   }
   try {
-    // call dbRef to get the usersRef which is already called in firebase.jsx
-    const dbRef = ref(database);
     const newUserRef = push(usersRef); // Create a new child reference under "users"
     const userData = {
       name: name,
@@ -159,19 +154,6 @@ async function fetchLeaderboard(game) {
   const topUsers = userScores.sort((a, b) => b.score - a.score).slice(0, 10);
   return topUsers; // Return the top 10 users
 }
-
-async function fetchProfile(email) {
-  const users = await getAllUsers(); // Fetch all users from the database
-  console.log(users); // Log the users for debugging
-
-  for (const userId in users) {
-    const user = users[userId];
-    if (user.email === email) {
-      return user; // Return the user profile if found
-    }
-  }
-  return null; // User not found
-} 
 
 export { app, database, getAllUsers, checkUser, addUser, updateScore, fetchLeaderboard };
 

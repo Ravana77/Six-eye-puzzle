@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getAllUsers } from './firebase';
 import './App.css';
 
 const Header = () => {
@@ -48,15 +47,6 @@ const Footer = () => {
 function App() {
     const [showWelcome, setShowWelcome] = useState(true);
     const [welcomeAnimation, setWelcomeAnimation] = useState('');
-
-    const handleGetUsers = async () => {
-        try {
-            const users = await getAllUsers();
-            console.log("Users:", users);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        }
-    };
 
     useEffect(() => {
         // Welcome animation sequence

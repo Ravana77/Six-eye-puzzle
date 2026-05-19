@@ -46,6 +46,7 @@ const Survival = () => {
         } else if (gameActive && timeLeft === 0) {
             handleWrongAnswer();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timeLeft, gameActive]);
 
     const checkSolution = (answer) => {

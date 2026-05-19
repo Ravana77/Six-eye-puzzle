@@ -1,14 +1,12 @@
 import React from 'react';
 import { Container, Card, Row, Col } from 'react-bootstrap';
 import { useSession } from './sessionContext';
-import { fetchProfile } from './firebase'; 
 import './profile.css';
 
 
 const Profile = () => {
   const { user, logout } = useSession();
   const [userProfile, setUserProfile] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     console.log('user', user);
