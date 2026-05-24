@@ -1,0 +1,208 @@
+/* ============================================================
+   Auth pages — replaces login.css + signup.css (~150 lines of dup).
+   Uses tokens + utilities; preserves the neon cyan/magenta vibe.
+   ============================================================ */
+
+.auth-shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--bg-base), #03020a 60%, #07060d);
+  color: var(--text-soft);
+  isolation: isolate;
+}
+
+/* Background neon city — kept from original essence */
+.auth-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../../public/neon-skyscrapers.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0.18;
+  filter: blur(1px) saturate(1.1);
+  z-index: -1;
+}
+.auth-shell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(138, 43, 226, 0.18), transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Header */
+.auth-header {
+  text-align: center;
+  padding: var(--sp-7) var(--sp-4) var(--sp-5);
+  position: relative;
+  border-bottom: 1px solid var(--border-soft);
+}
+.auth-header__logo {
+  width: clamp(56px, 9vw, 80px);
+  height: auto;
+  margin: 0 auto var(--sp-3);
+  filter: drop-shadow(0 0 10px var(--neon-magenta)) invert(0.85);
+}
+.auth-header__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-widest);
+  font-size: var(--fs-hero);
+  margin: 0;
+  color: var(--neon-cyan);
+  text-shadow: var(--ts-lg-cyan);
+  animation: neonPulse 2.4s ease-in-out infinite alternate;
+}
+.auth-header__subtitle {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--neon-magenta);
+  text-shadow: var(--ts-md-magenta);
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-body-lg);
+}
+
+/* Main */
+.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-6) var(--sp-4);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card-strong);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border-magenta);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-card), 0 0 30px rgba(255, 0, 255, 0.25);
+  padding: var(--sp-7) var(--sp-6);
+  position: relative;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) both;
+}
+
+.auth-card__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  margin: 0 0 var(--sp-5);
+  color: var(--neon-cyan);
+  text-shadow: var(--ts-md-cyan);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  text-align: center;
+}
+
+.auth-form { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.auth-field { display: flex; flex-direction: column; gap: var(--sp-1); }
+.auth-field__label {
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-muted);
+}
+.auth-field__err {
+  font-family: var(--font-body);
+  color: var(--status-error);
+  font-size: var(--fs-small);
+  min-height: 1.2em;
+  text-shadow: var(--glow-sm-error);
+}
+
+.auth-pw-wrap { position: relative; }
+.auth-pw-wrap .input-neon { padding-right: 3rem; }
+.auth-pw-toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: var(--fs-tiny);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  padding: var(--sp-2);
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  transition: color var(--dur-fast), background var(--dur-fast);
+}
+.auth-pw-toggle:hover { color: var(--neon-cyan); background: rgba(0, 240, 255, 0.08); }
+
+.auth-submit { margin-top: var(--sp-3); }
+
+.auth-spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinSlow 0.8s linear infinite;
+  margin-right: var(--sp-2);
+  vertical-align: middle;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: var(--sp-4);
+  font-family: var(--font-body);
+  color: var(--text-soft);
+  font-size: var(--fs-body);
+}
+.auth-switch a {
+  color: var(--neon-cyan);
+  font-weight: 600;
+  text-shadow: 0 0 6px var(--neon-cyan);
+  margin-left: var(--sp-1);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+.auth-switch a:hover { color: var(--neon-magenta); border-bottom-color: var(--neon-magenta); text-shadow: 0 0 6px var(--neon-magenta); }
+
+/* Footer */
+.auth-footer {
+  text-align: center;
+  padding: var(--sp-5) var(--sp-4);
+  border-top: 1px solid var(--border-soft);
+  font-family: var(--font-body);
+  color: var(--text-dim);
+  font-size: var(--fs-small);
+  background: rgba(0, 0, 0, 0.4);
+}
+.auth-footer p { margin: var(--sp-1) 0; }
+.auth-footer .auth-footer__tag { color: var(--text-soft); }
+
+/* Alert (inline) */
+.auth-alert {
+  background: rgba(255, 20, 147, 0.15);
+  border: 1.5px solid var(--status-error);
+  color: var(--status-error);
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  text-align: center;
+  margin-bottom: var(--sp-3);
+}
+
+@media (max-width: 480px) {
+  .auth-header { padding: var(--sp-6) var(--sp-3) var(--sp-4); }
+  .auth-card   { padding: var(--sp-5) var(--sp-4); }
+}

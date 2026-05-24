@@ -1,206 +1,182 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useRef, useState } from "react";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
+import { useAchievements } from "./contexts/AchievementsContext";
+import usePuzzle from "./hooks/usePuzzle";
+import useCountdownTimer from "./hooks/useCountdownTimer";
+import useSound from "./hooks/useSound";
+import StartScreen from "./components/StartScreen";
+import PuzzleImage from "./components/PuzzleImage";
+import NumberPad from "./components/NumberPad";
+import MessageAlert from "./components/MessageAlert";
+import StatBox from "./components/StatBox";
+import GameOverModal from "./components/GameOverModal";
+import "./hard.css";
 import "./timeattack.css";
-import { Link } from "react-router-dom";
 
+const START_SECONDS = 60;
+const BONUS = 5;
+const PENALTY = 5;
+
+/**
+ * Time Attack — 60-second run. +5s correct, -5s wrong.
+ * Replaces the original implementation that had two competing
+ * useEffect blocks managing the same timer (audit critical bug).
+ * Now uses a single useCountdownTimer.
+ */
 const TimeAttack = () => {
-    const [puzzleBg, setPuzzleBg] = useState("#1a1a1a");
-    const [puzzleSolution, setPuzzleSolution] = useState(null);
-    const [timeLeft, setTimeLeft] = useState(60);
-    const [score, setScore] = useState(0);
-    const [gameActive, setGameActive] = useState(false);
-    const [message, setMessage] = useState("");
-    const [selectedAnswer, setSelectedAnswer] = useState(null);
-    const [showGameOverModal, setShowGameOverModal] = useState(false);
-    const { user, updateSessionScore } = useSession();
+  const { puzzle, loading, error, fetchPuzzle } = usePuzzle();
+  const [phase, setPhase] = useState("intro");
+  const [score, setScore] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [showOver, setShowOver] = useState(false);
+  const [highScore, setHighScore] = useState(false);
+  const [floaters, setFloaters] = useState([]); // animated +5s / -5s indicators
+  const floaterIdRef = useRef(0);
+  const scoreRef = useRef(0);
+  const { play } = useSound();
+  const { user, updateSessionScore } = useSession();
+  const { recordEvent } = useAchievements();
 
-    // Fetches puzzle data (question and solution) from an external API
-    const fetchPuzzleData = () => {
-        fetch("https://marcconrad.com/uob/banana/api.php")
-            .then(response => response.json())
-            .then(data => {
-                setPuzzleBg(data.question);
-                setPuzzleSolution(data.solution);
-            })
-            .catch(error => console.error("Error fetching puzzle data:", error));
-    };
+  const finishRun = async () => {
+    setPhase("over");
+    play("gameover");
+    if (user && scoreRef.current > 0) {
+      try {
+        const isHigh = await updateScore(user.email, "timeattack", scoreRef.current);
+        setHighScore(!!isHigh);
+        if (isHigh) updateSessionScore("timeattack", scoreRef.current);
+      } catch { /* ignore */ }
+    }
+    recordEvent({ type: "game_complete", mode: "timeattack", score: scoreRef.current });
+    setShowOver(true);
+  };
 
-    // Starts a new game by resetting the state and fetching a new puzzle
-    const startNewGame = () => {
-        setTimeLeft(60);
-        setScore(0);
-        setGameActive(true);
-        setMessage("");
-        setSelectedAnswer(null);
-        fetchPuzzleData();
-        setShowGameOverModal(false);
-    };
+  const { timeLeft, start: startTimer, reset: resetTimer, addSeconds } = useCountdownTimer({
+    initialSeconds: START_SECONDS,
+    onExpire: () => finishRun(),
+  });
 
-    // Handles the countdown timer when the game is active
-    useEffect(() => {
-        if (gameActive) {
-            const timer = setInterval(() => {
-                setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
-            }, 1000);
-            return () => clearInterval(timer);
-        }
-    }, [gameActive]);
+  useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
 
-    // Handles the end of the game when the timer reaches 0
-    useEffect(() => {
-        if (timeLeft === 0 && gameActive) {
-            const updateGameScore = async () => {
-                try {
-                    const a = await updateScore(user.email, 'timeattack', score);
-                    if (a) {
-                        updateSessionScore('timeattack', score);
-                    }
-                } catch (error) {
-                    console.error("Error updating score:", error);
-                }
-            };
-            updateGameScore();
-            setGameActive(false);
-            setShowGameOverModal(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [timeLeft, gameActive]);
+  // Tick SFX in last 5 seconds
+  useEffect(() => {
+    if (phase === "playing" && timeLeft > 0 && timeLeft <= 5) play("tick");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft, phase]);
 
-    // Checks if the selected answer is correct or incorrect
-    const checkSolution = (answer) => {
-        if (!gameActive) return;
-        setSelectedAnswer(answer);
-        if (answer === puzzleSolution) {
-            setMessage("✔️ Correct!");
-            setScore(prev => prev + 1);
-            setTimeLeft(prev => prev + 5);
-            fetchPuzzleData();
-        } else {
-            setMessage("❌ Incorrect! -5 seconds");
-            setTimeLeft(prev => (prev > 5 ? prev - 5 : 0));
-        }
-    };
+  const start = async () => {
+    play("start");
+    setScore(0);
+    setSelected(null);
+    setMessage(null);
+    setFloaters([]);
+    resetTimer(START_SECONDS);
+    setPhase("playing");
+    const p = await fetchPuzzle();
+    if (p) startTimer(START_SECONDS);
+  };
 
+  const pushFloater = (text, type) => {
+    const id = ++floaterIdRef.current;
+    setFloaters((prev) => [...prev, { id, text, type }]);
+    setTimeout(() => setFloaters((prev) => prev.filter((f) => f.id !== id)), 1100);
+  };
+
+  const handleSelect = async (n) => {
+    if (phase !== "playing" || !puzzle) return;
+    setSelected(n);
+    if (n === puzzle.solution) {
+      play("correct");
+      const next = scoreRef.current + 1;
+      setScore(next);
+      addSeconds(BONUS);
+      pushFloater(`+${BONUS}s`, "success");
+      setMessage({ text: "✔ Correct! +5s", type: "success" });
+      recordEvent({ type: "streak", mode: "timeattack", value: next });
+      const p = await fetchPuzzle();
+      if (p) setSelected(null);
+    } else {
+      play("wrong");
+      addSeconds(-PENALTY);
+      pushFloater(`-${PENALTY}s`, "error");
+      setMessage({ text: "✘ Wrong — −5s", type: "error" });
+      // brief lockout before allowing another tap
+      setTimeout(() => setSelected(null), 350);
+    }
+  };
+
+  if (phase === "intro") {
     return (
-        <Container fluid className="timeattack-container">
-            {/* Start Game Screen */}
-            {!gameActive && !showGameOverModal && (
-                <div className="start-screen">
-                    <h1 className="game-title">
-                        ⏳ Time Attack Mode
-                    </h1>
-                    <Button
-                        onClick={startNewGame}
-                        className="start-button"
-                    >
-                        START GAME
-                    </Button>
-                </div>
-            )}
-
-            {/* Game Active Screen */}
-            {gameActive && (
-                <div className="game-content-container">
-                    <div className="game-content">
-                        <div className="game-header">
-                            <h1 className="game-title">
-                                ⏳ Time Attack Mode
-                            </h1>
-                        </div>
-
-                        <Row className="stats-row">
-                            <Col md={6} className="mb-3 mb-md-0">
-                                <div className="stat-box">
-                                    <h3 className="time-left">
-                                        Time Left: {timeLeft}s
-                                    </h3>
-                                </div>
-                            </Col>
-                            <Col md={6}>
-                                <div className="stat-box">
-                                    <h3 className="score">
-                                        Score: {score}
-                                    </h3>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        {puzzleBg && (
-                            <div className="puzzle-container">
-                                <img
-                                    src={puzzleBg}
-                                    alt="Puzzle"
-                                    className="puzzle-image"
-                                />
-                            </div>
-                        )}
-
-                        <div className="buttons-container">
-                            <Row className="buttons-row">
-                                {[...Array(10)].map((_, index) => {
-                                    const answer = index;
-                                    return (
-                                        <Col xs="auto" key={answer}>
-                                            <Button
-                                                onClick={() => checkSolution(answer)}
-                                                className={`number-button ${selectedAnswer === answer ? 'selected' : ''}`}
-                                            >
-                                                {answer}
-                                            </Button>
-                                        </Col>
-                                    );
-                                })}
-                            </Row>
-                        </div>
-
-                        {message && (
-                            <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-                                {message}
-                            </Alert>
-                        )}
-                    </div>
-                </div>
-            )}
-
-            {/* Game finish pop up screen */}
-            <Modal
-                show={showGameOverModal}
-                onHide={() => setShowGameOverModal(false)}
-                centered
-                backdrop="static"
-                className="game-over-modal"
-            >
-                <Modal.Body className="modal-content">
-                    <div className="modal-body-content">
-                        <h2 className="modal-title">
-                            Game Over!
-                        </h2>
-                        <h3 className="modal-score">
-                            Your final score: <span>{score}</span>
-                        </h3>
-                        <div className="modal-buttons">
-                            <Button
-                                onClick={startNewGame}
-                                className="play-again-button"
-                            >
-                                Play Again
-                            </Button>
-                            <Button
-                                as={Link}
-                                to="/rank"
-                                className="ranking-button"
-                            >
-                                Quit
-                            </Button>
-                        </div>
-                    </div>
-                </Modal.Body>
-            </Modal>
-        </Container>
+      <div className="page page--narrow timeattack-page">
+        <StartScreen
+          icon="⏳"
+          title="Time Attack"
+          description={`Race against ${START_SECONDS} seconds. Right answers buy you +${BONUS}s. Wrong answers cost you −${PENALTY}s.`}
+          rules={[
+            `Starts with ${START_SECONDS} seconds on the clock`,
+            `+${BONUS}s for every correct answer`,
+            `−${PENALTY}s for every wrong answer`,
+            "Game ends when the clock hits zero",
+          ]}
+          cta="Begin"
+          variant="timeattack"
+          accent="var(--mode-timeattack)"
+          meta={user ? `Best: ${user.timeattack || 0}` : null}
+          onStart={start}
+        />
+      </div>
     );
+  }
+
+  return (
+    <div className="page page--narrow timeattack-page">
+      <header className="timeattack-header">
+        <StatBox label="Score" value={score} color="var(--mode-timeattack)" />
+        <StatBox
+          label="Time" value={timeLeft} suffix="s"
+          color={timeLeft <= 5 ? "var(--status-error)" : "var(--mode-timeattack)"}
+          critical={timeLeft <= 5 && timeLeft > 0}
+        />
+      </header>
+
+      <PuzzleImage src={puzzle?.question} loading={loading} error={error} />
+
+      <div className="timeattack-floaters" aria-hidden="true">
+        {floaters.map((f) => (
+          <span key={f.id} className={`timeattack-floater is-${f.type}`}>{f.text}</span>
+        ))}
+      </div>
+
+      <NumberPad
+        onSelect={handleSelect}
+        disabled={phase !== "playing" || !puzzle}
+        selected={selected}
+        accent="var(--mode-timeattack)"
+      />
+
+      <MessageAlert
+        message={message?.text}
+        type={message?.type}
+        duration={800}
+        onDismiss={() => setMessage(null)}
+      />
+
+      <GameOverModal
+        open={showOver}
+        title="Time's Up"
+        score={score}
+        isHighScore={highScore}
+        accent="var(--mode-timeattack)"
+        ctaVariant="timeattack"
+        backTo="/game/rank"
+        onPlayAgain={() => { setShowOver(false); start(); }}
+      />
+    </div>
+  );
 };
 
 export default TimeAttack;

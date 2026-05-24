@@ -1,0 +1,78 @@
+.number-pad {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-3);
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.number-pad--11 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  max-width: 520px;
+}
+
+.number-key {
+  --pad-accent: var(--neon-cyan);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+  font-weight: 700;
+  color: var(--pad-accent);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75)),
+              radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 70%);
+  border: 2px solid var(--pad-accent);
+  border-radius: var(--r-md);
+  min-height: 56px;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 0 transparent, inset 0 0 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 6px var(--pad-accent);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out),
+              background  var(--dur-med) var(--ease-out);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.number-key:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 14px var(--pad-accent);
+}
+.number-key:active:not(:disabled) { transform: translateY(0); }
+
+.number-key:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: saturate(0.5);
+}
+
+.number-key.is-selected {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.6));
+  box-shadow: 0 0 18px var(--pad-accent), inset 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+.number-key.is-correct {
+  --pad-accent: var(--status-success);
+  color: var(--status-success);
+  background: linear-gradient(180deg, rgba(0, 255, 127, 0.25), rgba(0, 0, 0, 0.7));
+  box-shadow: 0 0 22px var(--status-success);
+  animation: correctFlash 0.55s var(--ease-out);
+}
+.number-key.is-incorrect {
+  --pad-accent: var(--status-error);
+  color: var(--status-error);
+  background: linear-gradient(180deg, rgba(255, 20, 147, 0.25), rgba(0, 0, 0, 0.7));
+  box-shadow: 0 0 22px var(--status-error);
+  animation: shake 0.5s var(--ease-out);
+}
+
+@media (max-width: 480px) {
+  .number-pad      { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--sp-2); }
+  .number-pad--11  { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .number-key      { min-height: 48px; font-size: 1.1rem; }
+}

@@ -1,0 +1,317 @@
+/* ============================================================
+   SIX-EYE-PUZZLE — Base styles & shared utilities
+   Resets + body baseline + CRT overlay + utility classes
+   that page CSS can compose on.
+   ============================================================ */
+
+/* ---------- Modern reset (light-weight) ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-width: 100%; height: auto; }
+
+button { font-family: inherit; }
+
+a { color: inherit; text-decoration: none; }
+
+/* Hide scrollbar on tiny ornament rows (we still keep main scrollbars) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* ---------- Universal focus state (fixes audit gap) ---------- */
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* ---------- CRT overlay (kept light; preserves arcade essence) ---------- */
+.crt-effect { position: relative; }
+.crt-effect::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 240, 255, 0.045) 0%, transparent 2px),
+    linear-gradient(90deg, rgba(255, 0, 255, 0.025) 0%, transparent 2px);
+  background-size: 100% 4px, 4px 100%;
+  pointer-events: none;
+  z-index: var(--z-crt);
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+/* ---------- Typography utilities ---------- */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+
+.text-cyan    { color: var(--neon-cyan); }
+.text-magenta { color: var(--neon-magenta); }
+.text-muted   { color: var(--text-muted); }
+.text-soft    { color: var(--text-soft); }
+.text-dim     { color: var(--text-dim); }
+
+.text-glow-cyan    { text-shadow: var(--ts-md-cyan); }
+.text-glow-magenta { text-shadow: var(--ts-md-magenta); }
+.text-glow-cyan-lg    { text-shadow: var(--ts-lg-cyan); }
+.text-glow-magenta-lg { text-shadow: var(--ts-lg-magenta); }
+
+.upper { text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.upper-tight  { text-transform: uppercase; letter-spacing: var(--ls-wider); }
+.upper-loose  { text-transform: uppercase; letter-spacing: var(--ls-widest); }
+
+/* ---------- Neon card ---------- */
+.neon-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow-card), 0 0 20px rgba(255, 0, 255, 0.18);
+  position: relative;
+  transition: border-color var(--dur-med) var(--ease-out),
+              box-shadow  var(--dur-med) var(--ease-out),
+              transform   var(--dur-med) var(--ease-out);
+}
+
+.neon-card--cyan    { border-color: var(--border-cyan);    box-shadow: var(--shadow-card), 0 0 22px rgba(0, 240, 255, 0.2); }
+.neon-card--magenta { border-color: var(--border-magenta); box-shadow: var(--shadow-card), 0 0 22px rgba(255, 0, 255, 0.22); }
+.neon-card--purple  { border-color: var(--border-purple);  box-shadow: var(--shadow-card), 0 0 22px rgba(138, 43, 226, 0.25); }
+
+.neon-card:hover {
+  transform: translateY(-3px);
+}
+
+/* ---------- Neon button (the new universal arcade button) ---------- */
+.btn-neon {
+  --btn-color: var(--neon-cyan);
+  --btn-color-soft: rgba(0, 240, 255, 0.18);
+  --btn-color-glow: rgba(0, 240, 255, 0.6);
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-body-lg);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--btn-color);
+
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+              radial-gradient(circle at 50% 0%, var(--btn-color-soft), transparent 70%);
+  border: 2px solid var(--btn-color);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-6);
+  min-height: 48px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+
+  box-shadow: 0 0 0 0 transparent,
+              0 0 12px var(--btn-color-glow),
+              inset 0 0 12px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 6px var(--btn-color);
+
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-med)  var(--ease-out),
+              background var(--dur-med)  var(--ease-out),
+              border-color var(--dur-med) var(--ease-out);
+}
+
+.btn-neon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  pointer-events: none;
+}
+
+.btn-neon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55),
+              0 0 18px var(--btn-color-glow),
+              inset 0 0 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-neon:hover::before { transform: translateX(100%); }
+
+.btn-neon:active { transform: translateY(0); }
+
+.btn-neon:disabled,
+.btn-neon[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Variants — set via --btn-color, --btn-color-soft, --btn-color-glow */
+.btn-neon--cyan    { --btn-color: var(--neon-cyan);    --btn-color-soft: rgba(0, 240, 255, 0.18);  --btn-color-glow: rgba(0, 240, 255, 0.55); }
+.btn-neon--magenta { --btn-color: var(--neon-magenta); --btn-color-soft: rgba(255, 0, 255, 0.18);  --btn-color-glow: rgba(255, 0, 255, 0.55); }
+.btn-neon--purple  { --btn-color: var(--neon-purple);  --btn-color-soft: rgba(138, 43, 226, 0.22); --btn-color-glow: rgba(138, 43, 226, 0.55); }
+.btn-neon--success { --btn-color: var(--status-success); --btn-color-soft: rgba(0, 255, 127, 0.18); --btn-color-glow: rgba(0, 255, 127, 0.55); }
+.btn-neon--error   { --btn-color: var(--status-error);   --btn-color-soft: rgba(255, 20, 147, 0.18); --btn-color-glow: rgba(255, 20, 147, 0.55); }
+.btn-neon--warning { --btn-color: var(--status-warning); --btn-color-soft: rgba(255, 215, 0, 0.18); --btn-color-glow: rgba(255, 215, 0, 0.55); }
+
+/* Game-mode variants */
+.btn-neon--easy       { --btn-color: var(--mode-easy);       --btn-color-soft: rgba(0, 240, 255, 0.18); --btn-color-glow: rgba(0, 240, 255, 0.55); }
+.btn-neon--hard       { --btn-color: var(--mode-hard);       --btn-color-soft: rgba(255, 0, 255, 0.18); --btn-color-glow: rgba(255, 0, 255, 0.55); }
+.btn-neon--timeattack { --btn-color: var(--mode-timeattack); --btn-color-soft: rgba(0, 255, 127, 0.18); --btn-color-glow: rgba(0, 255, 127, 0.55); }
+.btn-neon--survival   { --btn-color: var(--mode-survival);   --btn-color-soft: rgba(255, 20, 147, 0.18); --btn-color-glow: rgba(255, 20, 147, 0.55); }
+.btn-neon--memory     { --btn-color: var(--mode-memory);     --btn-color-soft: rgba(0, 191, 255, 0.18); --btn-color-glow: rgba(0, 191, 255, 0.55); }
+.btn-neon--scramble   { --btn-color: var(--mode-scramble);   --btn-color-soft: rgba(255, 215, 0, 0.18); --btn-color-glow: rgba(255, 215, 0, 0.55); }
+.btn-neon--daily      { --btn-color: var(--mode-daily);      --btn-color-soft: rgba(255, 140, 0, 0.18); --btn-color-glow: rgba(255, 140, 0, 0.55); }
+
+/* Sizes */
+.btn-neon--sm { font-size: var(--fs-body); padding: var(--sp-2) var(--sp-4); min-height: 40px; }
+.btn-neon--lg { font-size: var(--fs-h3);   padding: var(--sp-4) var(--sp-8); min-height: 56px; }
+.btn-neon--xl { font-size: var(--fs-h2);   padding: var(--sp-5) var(--sp-10); min-height: 72px; }
+
+/* Block variant */
+.btn-neon--block { width: 100%; }
+
+/* Ghost variant (transparent, just border) */
+.btn-neon--ghost {
+  background: transparent;
+  box-shadow: 0 0 6px var(--btn-color-glow);
+}
+
+/* ---------- Neon input ---------- */
+.input-neon {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text-soft);
+  background: var(--bg-input);
+  border: 2px solid var(--border-cyan);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  width: 100%;
+  min-height: 48px;
+  transition: border-color var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med)   var(--ease-out),
+              background var(--dur-med)   var(--ease-out);
+}
+
+.input-neon::placeholder { color: var(--text-dim); }
+
+.input-neon:focus,
+.input-neon:focus-visible {
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.18), var(--glow-md-magenta);
+  outline: none;
+}
+
+.input-neon[aria-invalid="true"] {
+  border-color: var(--status-error);
+  box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.2);
+}
+
+/* ---------- Containers / layouts ---------- */
+.page {
+  width: 100%;
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: var(--sp-6) var(--content-pad);
+  animation: pageFadeIn var(--dur-med) var(--ease-out) both;
+}
+
+.page--narrow { max-width: var(--container-narrow); }
+.page--wide   { max-width: var(--container-wide); }
+
+/* Stack helpers */
+.stack    { display: flex; flex-direction: column; gap: var(--sp-4); }
+.stack-sm { display: flex; flex-direction: column; gap: var(--sp-2); }
+.stack-lg { display: flex; flex-direction: column; gap: var(--sp-6); }
+.row      { display: flex; flex-direction: row;    gap: var(--sp-4); align-items: center; }
+
+/* ---------- Title styles ---------- */
+.title-hero {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-widest);
+  color: var(--neon-cyan);
+  text-shadow: var(--ts-lg-cyan);
+  animation: neonPulse 2.4s ease-in-out infinite alternate;
+  margin: 0;
+  line-height: var(--lh-tight);
+}
+
+.title-section {
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--neon-magenta);
+  text-shadow: var(--ts-md-magenta);
+  margin: 0 0 var(--sp-5) 0;
+  line-height: var(--lh-tight);
+}
+
+.subtitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-body-lg);
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  margin: 0;
+}
+
+/* ---------- Loading skeleton ---------- */
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.04) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: var(--r-md);
+}
+
+/* ---------- Divider ---------- */
+.neon-divider {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--neon-magenta), var(--neon-cyan), var(--neon-magenta), transparent);
+  border: none;
+  margin: var(--sp-5) 0;
+  opacity: 0.7;
+}
+
+/* ---------- Visually hidden (a11y) ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: rgba(255, 0, 255, 0.45);
+  color: #fff;
+}

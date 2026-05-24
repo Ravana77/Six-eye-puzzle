@@ -1,132 +1,136 @@
-import React from 'react';
-import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, Outlet } from "react-router-dom";
-import './layout.css';
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import SettingsModal from "./components/SettingsModal";
+import { useSettings } from "./contexts/SettingsContext";
+import useSound from "./hooks/useSound";
+import "./layout.css";
 
-const Header = () => {
-    return (
-        <div className="crt-effect">
-            <header className="bg-black text-center py-2 py-md-3 border-bottom border-neon">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-4 col-md-2 order-1">
-                            <img 
-                                src="/logo.png" 
-                                alt="Game Logo" 
-                                className="img-fluid d-none d-md-block" 
-                                style={{ 
-                                    filter: "drop-shadow(0 0 8px #ff00ff) invert(0.8)",
-                                    maxHeight: '80px'
-                                }} 
-                            />
-                        </div>
-                        <div className="col-12 col-md-8 order-3 order-md-2 mt-2 mt-md-0">
-                            <h1 className="display-4 fw-bold text-uppercase mb-0 mb-md-1 neon-text-primary" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-                                Six Eye Puzzle
-                            </h1>
-                            <p className="lead fw-bold text-uppercase neon-text-secondary mb-0" style={{ fontSize: 'clamp(0.8rem, 2vw, 1.25rem)' }}>
-                                Unleash Your Inner Brainiac
-                            </p>
-                        </div>
-                        <div className="col-8 col-md-2 order-2 order-md-3 text-end">
-                            {/* Placeholder for potential mobile menu or other elements */}
-                        </div>
-                    </div>
-                </div>
-            </header>
+const NAV = [
+  { to: "/game/home",         label: "Home" },
+  { to: "/game/daily",        label: "Daily" },
+  { to: "/game/how",          label: "How to Play" },
+  { to: "/game/leaderboard",  label: "Leaderboard" },
+  { to: "/game/achievements", label: "Achievements" },
+  { to: "/game/aboutus",      label: "About" },
+  { to: "/game/profile",      label: "Profile" },
+];
 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-black border-bottom border-neon">
-                <div className="container px-0">
-                    <button
-                        className="navbar-toggler border-neon mx-auto"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav w-100 d-flex flex-wrap justify-content-center justify-content-lg-around">
-                            {[
-                                { to: "home", text: "Home" },
-                                { to: "how", text: "How to Play" },
-                                { to: "/leaderboard", text: "Leaderboard" },
-                                { to: "/aboutus", text: "About Us" },
-                                { to: "/profile", text: "Profile" }
-                            ].map((item, index) => (
-                                <li key={index} className="nav-item flex-grow-1 text-center mx-1 my-1 my-lg-0">
-                                    <Link 
-                                        to={item.to} 
-                                        className="nav-link neon-nav-link py-2 py-lg-3"
-                                        style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.25rem)' }}
-                                    >
-                                        {item.text}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+/**
+ * Curated arcade-style quotes — no network dependency.
+ * Rotates every 15s. Replaces the slow / risky Chuck-Norris fetch
+ * (which often left the footer blank for 1-2 seconds on load).
+ */
+const FOOTER_QUOTES = [
+  "Trust the glow. Solve the code.",
+  "Every neon flicker is another second slipping away.",
+  "In the puzzle, your only enemy is the clock.",
+  "Pixel by pixel, the answer reveals itself.",
+  "Don't blink — the next puzzle is already loading.",
+  "Memory, speed, instinct. Pick two and survive.",
+  "The arcade never sleeps. Neither should your reflexes.",
+  "Numbers don't lie — but they do scramble.",
+  "Hold the line. The streak is sacred.",
+  "There is no AFK in Six-Eye Puzzle.",
+];
+
+function Header({ onOpenSettings }) {
+  const [open, setOpen] = useState(false);
+  const { soundEnabled, setSoundEnabled } = useSettings();
+  const { play } = useSound();
+  const location = useLocation();
+
+  // Close mobile menu on route change
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+
+  return (
+    <header className="app-header crt-effect">
+      <div className="app-header__bar">
+        <Link to="/game/home" className="app-header__brand" aria-label="Six-Eye Puzzle home">
+          <img src="/logo.png" alt="" className="app-header__logo" aria-hidden="true" />
+          <div className="app-header__title-block">
+            <h1 className="app-header__title">Six-Eye Puzzle</h1>
+            <p className="app-header__subtitle">Unleash Your Inner Brainiac</p>
+          </div>
+        </Link>
+
+        <nav className={`app-header__nav${open ? " is-open" : ""}`} aria-label="Primary">
+          {NAV.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `nav-link-neon${isActive ? " is-active" : ""}`}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="app-header__actions">
+          <button
+            type="button"
+            className="app-header__icon-btn"
+            onClick={() => { setSoundEnabled(!soundEnabled); play("click"); }}
+            aria-label={soundEnabled ? "Mute sound" : "Unmute sound"}
+            title={soundEnabled ? "Mute" : "Unmute"}
+          >
+            {soundEnabled ? "🔊" : "🔇"}
+          </button>
+          <button
+            type="button"
+            className="app-header__icon-btn"
+            onClick={() => { onOpenSettings(); play("click"); }}
+            aria-label="Open settings"
+            title="Settings"
+          >
+            ⚙
+          </button>
+          <button
+            type="button"
+            className={`app-header__toggle${open ? " is-open" : ""}`}
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls="primary-nav"
+            aria-label="Toggle navigation menu"
+          >
+            <span />
+          </button>
         </div>
-    );
-};
+      </div>
+    </header>
+  );
+}
 
-const Footer = () => {
-    const [quote, setQuote] = useState("");
+function Footer() {
+  const [idx, setIdx] = useState(() => Math.floor(Math.random() * FOOTER_QUOTES.length));
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % FOOTER_QUOTES.length), 15000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <footer className="app-footer">
+      <p key={idx} className="app-footer__quote anim-fade-in">“{FOOTER_QUOTES[idx]}”</p>
+      <p className="app-footer__meta">
+        © {new Date().getFullYear()} Six-Eye Puzzle · v1.0 · Developed by Ranasinghege H.R
+      </p>
+    </footer>
+  );
+}
 
-    useEffect(() => {
-        const fetchQuote = async () => {
-            try {
-                const response = await fetch("https://api.chucknorris.io/jokes/random");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                if (data && data.value) { // Adjusted to use 'value' instead of 'text'
-                    setQuote(data.value);
-                } else {
-                    setQuote("Challenge your mind with Six-Eye Puzzle!"); // Fallback quote
-                }
-            } catch (error) {
-                console.error("Error fetching quote:", error);
-                setQuote("Challenge your mind with Six-Eye Puzzle!"); // Fallback quote
-            }
-        };
+export default function Layout() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const location = useLocation();
 
-        fetchQuote();
-    }, []);
-    
-    return (
-        <footer className="bg-black text-neon-secondary text-center py-3 border-top border-neon">
-            <div>
-            <h3 className="mb-1 large">{quote}</h3>
-            </div>
-            {/* <div className="container">
-                <p className="mb-1 small">Copyright Notice – © 2025 Six-Eye Puzzle. All rights reserved.</p>
-                <p className="mb-1 small">Game Version – Version 1.0.0</p>
-                <p className="mb-1 small">Contact Information – chillehasindu123@gmail.com</p>
-                <p className="mb-1 small">Developer Credit – Developed by Ranasinghege H.R</p>
-                <p className="mb-0 small">"Challenge your mind with Six-Eye Puzzle!"</p>
-            </div> */}
-        </footer>
-    );
-};
-
-const Layout = () => {
-    return (
-        <div className="text-white d-flex flex-column" style={{ minHeight: "100vh" }}>
-            <Header />
-            <main className="abcd py-4 flex-grow-1">
-                <Outlet />
-            </main>
-            <Footer />
+  return (
+    <div className="app-shell">
+      <Header onOpenSettings={() => setSettingsOpen(true)} />
+      <main className="app-main">
+        {/* Key on pathname so each route fades in independently */}
+        <div key={location.pathname} className="app-main__inner">
+          <Outlet />
         </div>
-    );
-};
-
-export default Layout;
+      </main>
+      <Footer />
+      <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+    </div>
+  );
+}

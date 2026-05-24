@@ -1,205 +1,178 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button, Alert, Modal } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSession } from "./sessionContext";
 import { updateScore } from "./firebase";
-import "./memory.css"; 
+import { useAchievements } from "./contexts/AchievementsContext";
+import usePuzzle from "./hooks/usePuzzle";
+import useSound from "./hooks/useSound";
+import StartScreen from "./components/StartScreen";
+import PuzzleImage from "./components/PuzzleImage";
+import NumberPad from "./components/NumberPad";
+import MessageAlert from "./components/MessageAlert";
+import StatBox from "./components/StatBox";
+import GameOverModal from "./components/GameOverModal";
+import "./hard.css"; // shared game-page layout
+import "./memory.css";
 
+const INITIAL_REVEAL = 5000;
+const MIN_REVEAL = 1800;
+const REVEAL_STEP = 350;
+
+/**
+ * Memory mode — puzzle is shown briefly, then hidden, then the player
+ * recalls the digit. Time-to-memorise shrinks each round.
+ */
 const Memory = () => {
-  const [puzzleBg, setPuzzleBg] = useState(null);
-  const [puzzleSolution, setPuzzleSolution] = useState(null);
-  const [message, setMessage] = useState("");
-  const [showImage, setShowImage] = useState(true);
-  const [timeLimit, setTimeLimit] = useState(5000);
-  const [gameActive, setGameActive] = useState(false);
-  const [showScoreModal, setShowScoreModal] = useState(false);
-  const [currentStreak, setCurrentStreak] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const { puzzle, loading, error, fetchPuzzle } = usePuzzle();
+  const [phase, setPhase] = useState("intro"); // intro | reveal | recall | over
+  const [reveal, setReveal] = useState(INITIAL_REVEAL);
+  const [revealMs, setRevealMs] = useState(INITIAL_REVEAL);
+  const [streak, setStreak] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [showOver, setShowOver] = useState(false);
+  const [highScore, setHighScore] = useState(false);
+  const [countdown, setCountdown] = useState(0);   // visible reveal countdown
+  const revealTimerRef = useRef(null);
+  const tickerRef = useRef(null);
+  const { play } = useSound();
   const { user, updateSessionScore } = useSession();
+  const { recordEvent } = useAchievements();
 
-  // Fetches puzzle data the image and the solution from banana api 
-  const fetchPuzzleData = () => {
-    fetch("https://marcconrad.com/uob/banana/api.php")
-      .then(response => response.json())
-      .then(data => {
-        setPuzzleBg(data.question);
-        setPuzzleSolution(data.solution);
-        setShowImage(true);
-        setSelectedAnswer(null);
-        setTimeout(() => setShowImage(false), timeLimit);
-      })
-      .catch(error => console.error("Error fetching puzzle data:", error));
+  const clearTimers = () => {
+    if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    if (tickerRef.current) clearInterval(tickerRef.current);
+    revealTimerRef.current = null;
+    tickerRef.current = null;
   };
 
-  // restart new game , refresh old game 
-  const startNewGame = () => {
-    setCurrentStreak(0);
-    setTimeLimit(5000);
-    setGameActive(true);
-    setMessage("");
-    fetchPuzzleData();
-    setShowScoreModal(false);
+  useEffect(() => () => clearTimers(), []);
+
+  const newRound = useCallback(async () => {
+    clearTimers();
+    setSelected(null);
+    setMessage(null);
+    setPhase("reveal");
+    const p = await fetchPuzzle();
+    if (!p) return;
+    setCountdown(Math.ceil(reveal / 1000));
+    tickerRef.current = setInterval(() => {
+      setCountdown((c) => (c > 0 ? c - 1 : 0));
+    }, 1000);
+    revealTimerRef.current = setTimeout(() => {
+      setPhase("recall");
+      clearInterval(tickerRef.current);
+      tickerRef.current = null;
+      play("tick");
+    }, reveal);
+  }, [reveal, fetchPuzzle, play]);
+
+  const start = async () => {
+    play("start");
+    setStreak(0);
+    setReveal(INITIAL_REVEAL);
+    setRevealMs(INITIAL_REVEAL);
+    await newRound();
   };
 
-  // Checking the answer
-  const checkSolution = (answer) => {
-    if (!gameActive || showImage) return;
-    
-    setSelectedAnswer(answer);
-    if (answer === puzzleSolution) {
-      // if answer is wrong
-      const newStreak = currentStreak + 1;
-      setCurrentStreak(newStreak);
-      setMessage("✔️ Correct! +1 to streak");
-      setTimeLimit(prev => Math.max(2000, prev - 500));
-      
-      setTimeout(() => {
-        setMessage("");
-        fetchPuzzleData();
-      }, 1000);
+  const handleSelect = async (n) => {
+    if (phase !== "recall" || !puzzle || selected != null) return;
+    setSelected(n);
+    if (n === puzzle.solution) {
+      play("correct");
+      const next = streak + 1;
+      setStreak(next);
+      const nextReveal = Math.max(MIN_REVEAL, reveal - REVEAL_STEP);
+      setReveal(nextReveal);
+      setRevealMs(nextReveal);
+      setMessage({ text: `✔ +1 (streak ${next})`, type: "success" });
+      recordEvent({ type: "streak", mode: "memory", value: next });
+      setTimeout(() => { newRound(); }, 900);
     } else {
-      // if answer is correct
-      setMessage("❌ Incorrect! Game Over");
-      setTimeout(() => {
-        const updateGameScore = async () => {
-            try {
-                const a = await updateScore(user.email, 'memory', currentStreak);
-                if (a) {
-                    updateSessionScore('memory', currentStreak);
-                }
-            } catch (error) {
-                console.error("Error updating score:", error);
-            }
-        };
-        updateGameScore();
-        setGameActive(false);
-        setShowScoreModal(true);
-      }, 1500);
+      play("wrong");
+      setMessage({ text: `Wrong — it was ${puzzle.solution}`, type: "error" });
+      setPhase("over");
+      setTimeout(async () => {
+        if (user && streak > 0) {
+          try {
+            const isHigh = await updateScore(user.email, "memory", streak);
+            setHighScore(!!isHigh);
+            if (isHigh) updateSessionScore("memory", streak);
+          } catch { /* ignore */ }
+        }
+        recordEvent({ type: "game_complete", mode: "memory", score: streak });
+        play("gameover");
+        setShowOver(true);
+      }, 1300);
     }
   };
 
+  if (phase === "intro") {
+    return (
+      <div className="page page--narrow memory-page">
+        <StartScreen
+          icon="🧠"
+          title="Memory Mode"
+          description="See the puzzle, remember the digit, then pick it from the pad. Each round the reveal gets shorter."
+          rules={[
+            `Starts at ${INITIAL_REVEAL / 1000}s reveal`,
+            `Reveal shrinks by ${REVEAL_STEP / 1000}s per correct answer`,
+            `Minimum reveal: ${MIN_REVEAL / 1000}s`,
+            "One wrong answer ends the run",
+          ]}
+          cta="Begin"
+          variant="memory"
+          accent="var(--mode-memory)"
+          meta={user ? `Best streak: ${user.memory || 0}` : null}
+          onStart={start}
+        />
+      </div>
+    );
+  }
+
   return (
-    <Container fluid className="memory-container">
-      {/* Start Game Screen */}
-      {!gameActive && !showScoreModal && (
-        <div className="start-screen">
-          <h1 className="game-title">
-            🧠 Memory Challenge
-          </h1>
-          <p className="game-description">
-            Remember the number before it disappears! Score is your streak length.
-          </p>
-          <Button 
-            onClick={startNewGame}
-            className="start-button"
-          >
-            START CHALLENGE
-          </Button>
-        </div>
-      )}
+    <div className="page page--narrow memory-page">
+      <header className="memory-header">
+        <StatBox label="Streak" value={streak} color="var(--mode-memory)" />
+        <StatBox label="Reveal" value={(revealMs / 1000).toFixed(1)} suffix="s" color="var(--mode-memory)" />
+        {phase === "reveal" && (
+          <StatBox label="Memorise" value={countdown} suffix="s" color="var(--status-warning)" critical={countdown <= 1 && countdown > 0} />
+        )}
+      </header>
 
-      {/* Game Active Screen */}
-      {gameActive && (
-        <div className="game-content-container">
-          <div className="game-content">
-            <div className="game-header">
-              <h1 className="game-title">
-                🧠 Memory Mode
-              </h1>
-            </div>
+      <PuzzleImage
+        src={puzzle?.question}
+        loading={loading}
+        error={error}
+        hidden={phase === "recall"}
+      />
 
-            <div className="streak-display">
-              <h3 className="streak-text">
-                Current Streak: {currentStreak}
-              </h3>
-            </div>
+      <NumberPad
+        onSelect={handleSelect}
+        disabled={phase !== "recall" || selected != null}
+        selected={selected}
+        correct={selected != null ? puzzle?.solution : null}
+        accent="var(--mode-memory)"
+      />
 
-            <div className="puzzle-display">
-              {showImage && puzzleBg ? (
-                <div className="puzzle-image-container">
-                  <img
-                    src={puzzleBg}
-                    alt="Memory Puzzle"
-                    className="puzzle-image"
-                  />
-                </div>
-              ) : (
-                <div className="hidden-puzzle">
-                  <div className="question-mark">
-                    ?
-                  </div>
-                  <h3 className="prompt-text">
-                    What was the number?
-                  </h3>
-                </div>
-              )}
-            </div>
+      <MessageAlert
+        message={message?.text}
+        type={message?.type}
+        duration={1100}
+        onDismiss={() => setMessage(null)}
+      />
 
-            <div className="number-buttons-container">
-              <Row className="number-buttons-row">
-                {[...Array(10)].map((_, index) => {
-                  const answer = index;
-                  return (
-                    <Col xs="auto" key={answer}>
-                      <Button
-                        onClick={() => checkSolution(answer)}
-                        disabled={showImage}
-                        className={`number-button ${selectedAnswer === answer ? 
-                          (answer === puzzleSolution ? 'correct' : 'incorrect') : ''}`}
-                      >
-                        {answer}
-                      </Button>
-                    </Col>
-                  );
-                })}
-              </Row>
-            </div>
-
-            {message && (
-              <Alert className={`message-alert ${message.includes("✔️") ? 'success' : 'error'}`}>
-                {message}
-              </Alert>
-            )}
-          </div>
-        </div>
-      )}
-
-      <Modal 
-        show={showScoreModal} 
-        onHide={() => setShowScoreModal(false)}
-        centered
-        backdrop="static"
-        className="score-modal"
-      >
-        <Modal.Body className="modal-content">
-          <div className="modal-body">
-            <h2 className="modal-title">
-              🎯 Your Score
-            </h2>
-            <h1 className="modal-score">
-              {currentStreak}
-            </h1>
-            <h4 className="modal-subtitle">
-              Correct answers in a row
-            </h4>
-            <div className="modal-buttons">
-              <Button 
-                onClick={startNewGame}
-                className="play-again-button"
-              >
-                Play Again
-              </Button>
-              <Button 
-                href="/rank"
-                className="ranking-button"
-              >
-                QUIT
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </Container>
+      <GameOverModal
+        open={showOver}
+        title="Run Complete"
+        score={streak}
+        scoreLabel="Best Streak"
+        isHighScore={highScore}
+        accent="var(--mode-memory)"
+        ctaVariant="memory"
+        backTo="/game/rank"
+        onPlayAgain={() => { setShowOver(false); start(); }}
+      />
+    </div>
   );
 };
 

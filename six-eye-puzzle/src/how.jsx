@@ -1,81 +1,96 @@
 import React from "react";
-import "./how.css"; // New CSS file for custom styles
+import { Link } from "react-router-dom";
+import "./how.css";
 
-function HowToPlay() {
+const MODES = [
+  {
+    title: "Easy", to: "/game/easy", icon: "🌿", color: "var(--mode-easy)",
+    rules: [
+      "Type the missing number for the puzzle",
+      "No timer — take your time",
+      "Use this to learn the visual pattern",
+    ],
+  },
+  {
+    title: "Hard", to: "/game/hard", icon: "💎", color: "var(--mode-hard)",
+    rules: [
+      "10-second timer",
+      "Pick the right answer from 0–10",
+      "One click locks your answer in",
+    ],
+  },
+  {
+    title: "Time Attack", to: "/game/timeattack", icon: "⏳", color: "var(--mode-timeattack)",
+    rules: [
+      "Starts with 60 seconds",
+      "+5s for every correct answer",
+      "−5s for every wrong answer",
+      "Game ends when the timer hits zero",
+    ],
+  },
+  {
+    title: "Survival", to: "/game/survival", icon: "❤️", color: "var(--mode-survival)",
+    rules: [
+      "Three lives",
+      "10 seconds per puzzle",
+      "Lose a life on wrong or timeout",
+      "Run ends at zero lives",
+    ],
+  },
+  {
+    title: "Memory", to: "/game/memory", icon: "🧠", color: "var(--mode-memory)",
+    rules: [
+      "Puzzle shows briefly, then hides",
+      "Remember the missing number",
+      "Time-to-memorise shrinks each round",
+      "Wrong answer ends the run",
+    ],
+  },
+  {
+    title: "Scramble", to: "/game/scramble", icon: "🎲", color: "var(--mode-scramble)",
+    rules: [
+      "Digits 0–9 appear in random order",
+      "Tap them in correct order to form the answer",
+      "10-second timer per puzzle",
+      "Long streaks multiply your score",
+    ],
+  },
+  {
+    title: "Daily Challenge", to: "/game/daily", icon: "🌅", color: "var(--mode-daily)",
+    rules: [
+      "One puzzle per day",
+      "Same puzzle for every player",
+      "Solve it to extend your streak",
+      "Miss a day, the streak resets",
+    ],
+  },
+];
+
+export default function HowToPlay() {
   return (
-    <div className="how-to-play-container">
-      <div className="how-to-play-content">
-        <h1 className="game-title">
-          6 Eye Puzzle
-        </h1>
-        
-        <div className="game-mode-section">
-          <h2 className="section-title">Game Modes</h2>
-          
-          <div className="mode-card classic">
-            <h3 className="mode-title">Classic Mode</h3>
-            <ul className="mode-instructions">
-              <li>classic mode has 2 modes </li>
-              <li>think and answer no restriction</li>
-              <li>there is a time limit of 10 s to answer</li>
-              <li>Perfect for relaxed, thoughtful gameplay</li>
+    <div className="page how-page">
+      <header className="how-hero">
+        <h1 className="title-section">How to Play</h1>
+        <p className="how-sub">
+          Six-Eye Puzzle is a series of fast banana-math puzzles. The challenge is your reaction
+          speed, memory, and ability to think under pressure.
+        </p>
+      </header>
+
+      <section className="how-grid">
+        {MODES.map((m) => (
+          <article className="how-card" key={m.title} style={{ "--how-accent": m.color }}>
+            <header className="how-card__head">
+              <span className="how-card__icon" aria-hidden="true">{m.icon}</span>
+              <h2 className="how-card__title">{m.title}</h2>
+            </header>
+            <ul className="how-card__rules">
+              {m.rules.map((r, i) => (<li key={i}>{r}</li>))}
             </ul>
-          </div>
-          
-          <div className="mode-card time-attack">
-            <h3 className="mode-title">Time Attack</h3>
-            <ul className="mode-instructions">
-              <li>Race against a 60-second timer</li>
-              <li>Each correct answer adds 5 seconds</li>
-              <li>each wrong answer reduces 5 seconds</li>
-              <li>Test your speed and accuracy</li>
-            </ul>
-          </div>
-          
-          <div className="mode-card survival">
-            <h3 className="mode-title">Survival</h3>
-            <ul className="mode-instructions">
-              <li>Start with 3 lives</li>
-              <li>10 seconds per puzzle</li>
-              <li>Lose a life for each wrong answer</li>
-              <li>See how long you can survive!</li>
-            </ul>
-          </div>
-          
-          <div className="mode-card memory">
-            <h3 className="mode-title">Memory</h3>
-            <ul className="mode-instructions">
-              <li>Puzzle disappears after 5 seconds</li>
-              <li>Remember the solution from memory</li>
-              <li>Build a streak for greater score</li>
-              <li>Highest streak wins</li>
-            </ul>
-          </div>
-          
-          <div className="mode-card scramble">
-            <h3 className="mode-title">Scramble</h3>
-            <ul className="mode-instructions">
-              <li>Numbers appear in random order</li>
-              <li>Reconstruct the correct solution</li>
-              <li>10-second time limit per puzzle</li>
-              <li>Increase the streak to Increase your highest score</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="general-instructions">
-          <h2 className="section-title">How to Play</h2>
-          <ul>
-            <li>Select your preferred game mode</li>
-            <li>Solve the math puzzle that appears</li>
-            <li>Submit your answer before time runs out</li>
-            <li>Watch your score improve with each correct answer</li>
-            <li>Compete for the highest score on the leaderboard!</li>
-          </ul>
-        </div>
-      </div>
+            <Link to={m.to} className="how-card__cta">Play {m.title} →</Link>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }
-
-export default HowToPlay;

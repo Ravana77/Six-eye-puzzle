@@ -1,0 +1,186 @@
+/* ============================================================
+   SIX-EYE-PUZZLE — Design Tokens
+   The single source of truth for the visual language.
+   Preserves the cyberpunk-neon essence; only consolidates values.
+   ============================================================ */
+
+:root {
+  /* ---------- Neon palette (essence) ---------- */
+  --neon-cyan:        #00f0ff;
+  --neon-cyan-soft:   rgba(0, 240, 255, 0.5);
+  --neon-magenta:     #ff00ff;
+  --neon-magenta-soft:rgba(255, 0, 255, 0.5);
+  --neon-purple:      #8a2be2;
+  --neon-purple-deep: #4b0082;
+  --neon-orchid:      #ba55d3;
+
+  /* ---------- Game-mode accents ---------- */
+  --mode-classic:    #8a2be2;  /* purple */
+  --mode-easy:       #00f0ff;  /* cyan */
+  --mode-hard:       #ff00ff;  /* magenta */
+  --mode-timeattack: #00ff7f;  /* lime */
+  --mode-survival:   #ff1493;  /* deep pink */
+  --mode-memory:     #00bfff;  /* sky blue */
+  --mode-scramble:   #ffd700;  /* gold */
+  --mode-daily:      #ff8c00;  /* tangerine for daily challenge */
+
+  /* ---------- Status colors ---------- */
+  --status-success:  #00ff7f;
+  --status-error:    #ff1493;
+  --status-warning:  #ffd700;
+  --status-info:     #00bfff;
+
+  /* ---------- Surfaces ---------- */
+  --bg-base:    #07060d;
+  --bg-deep:    #0a0a14;
+  --bg-card:    rgba(10, 10, 20, 0.65);
+  --bg-card-strong: rgba(10, 10, 20, 0.85);
+  --bg-modal:   #120827;
+  --bg-input:   rgba(20, 20, 30, 0.9);
+  --bg-overlay: rgba(0, 0, 0, 0.85);
+
+  /* ---------- Borders ---------- */
+  --border-soft:    rgba(255, 0, 255, 0.25);
+  --border-cyan:    rgba(0, 240, 255, 0.6);
+  --border-magenta: rgba(255, 0, 255, 0.6);
+  --border-purple:  rgba(138, 43, 226, 0.6);
+
+  /* ---------- Text ---------- */
+  --text-primary:   #ffffff;
+  --text-cyan:      var(--neon-cyan);
+  --text-magenta:   var(--neon-magenta);
+  --text-muted:     #d9b3ff;
+  --text-soft:      #e6d5ff;
+  --text-dim:       rgba(230, 213, 255, 0.65);
+
+  /* ---------- Typography ---------- */
+  --font-display: 'Orbitron', 'Segoe UI', sans-serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+  /* Responsive type scale (clamp) */
+  --fs-hero:    clamp(2.5rem, 7vw, 4.5rem);
+  --fs-title:   clamp(2rem,   5vw, 3rem);
+  --fs-h2:      clamp(1.5rem, 4vw, 2.25rem);
+  --fs-h3:      clamp(1.25rem, 3vw, 1.75rem);
+  --fs-body-lg: clamp(1.05rem, 2.2vw, 1.25rem);
+  --fs-body:    clamp(0.95rem, 2vw, 1.1rem);
+  --fs-small:   0.875rem;
+  --fs-tiny:    0.75rem;
+
+  /* Letter-spacing */
+  --ls-tight:  -0.01em;
+  --ls-normal: 0;
+  --ls-wide:   0.08em;
+  --ls-wider:  0.18em;
+  --ls-widest: 0.3em;
+
+  /* Line-height */
+  --lh-tight:  1.15;
+  --lh-normal: 1.45;
+  --lh-loose:  1.65;
+
+  /* ---------- Spacing scale (4px base) ---------- */
+  --sp-0:  0;
+  --sp-1:  0.25rem;
+  --sp-2:  0.5rem;
+  --sp-3:  0.75rem;
+  --sp-4:  1rem;
+  --sp-5:  1.5rem;
+  --sp-6:  2rem;
+  --sp-7:  2.5rem;
+  --sp-8:  3rem;
+  --sp-10: 4rem;
+  --sp-12: 6rem;
+
+  /* ---------- Radii ---------- */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   14px;
+  --r-xl:   20px;
+  --r-2xl:  28px;
+  --r-pill: 999px;
+
+  /* ---------- Glows (3-tier per color) ---------- */
+  --glow-sm-cyan:    0 0 6px var(--neon-cyan);
+  --glow-md-cyan:    0 0 8px var(--neon-cyan), 0 0 18px rgba(0, 240, 255, 0.7);
+  --glow-lg-cyan:    0 0 10px var(--neon-cyan), 0 0 22px var(--neon-cyan), 0 0 38px rgba(0, 240, 255, 0.55);
+
+  --glow-sm-magenta: 0 0 6px var(--neon-magenta);
+  --glow-md-magenta: 0 0 8px var(--neon-magenta), 0 0 18px rgba(255, 0, 255, 0.7);
+  --glow-lg-magenta: 0 0 10px var(--neon-magenta), 0 0 22px var(--neon-magenta), 0 0 38px rgba(255, 0, 255, 0.55);
+
+  --glow-sm-purple:  0 0 6px var(--neon-purple);
+  --glow-md-purple:  0 0 8px var(--neon-purple), 0 0 18px rgba(138, 43, 226, 0.7);
+  --glow-lg-purple:  0 0 10px var(--neon-purple), 0 0 22px var(--neon-purple), 0 0 38px rgba(138, 43, 226, 0.55);
+
+  --glow-sm-success: 0 0 6px var(--status-success);
+  --glow-md-success: 0 0 8px var(--status-success), 0 0 18px rgba(0, 255, 127, 0.65);
+
+  --glow-sm-error:   0 0 6px var(--status-error);
+  --glow-md-error:   0 0 8px var(--status-error), 0 0 18px rgba(255, 20, 147, 0.65);
+
+  /* ---------- Text-shadow tiers (matches glow) ---------- */
+  --ts-sm-cyan:    0 0 6px var(--neon-cyan);
+  --ts-md-cyan:    0 0 8px var(--neon-cyan), 0 0 16px rgba(0, 240, 255, 0.6);
+  --ts-lg-cyan:    0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 32px rgba(0, 240, 255, 0.55);
+
+  --ts-sm-magenta: 0 0 6px var(--neon-magenta);
+  --ts-md-magenta: 0 0 8px var(--neon-magenta), 0 0 16px rgba(255, 0, 255, 0.6);
+  --ts-lg-magenta: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta), 0 0 32px rgba(255, 0, 255, 0.55);
+
+  /* ---------- Shadows (depth, not glow) ---------- */
+  --shadow-card:  0 6px 24px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.7);
+
+  /* ---------- Motion ---------- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:    160ms;
+  --dur-med:     260ms;
+  --dur-slow:    480ms;
+
+  /* ---------- Z-index scale ---------- */
+  --z-base:    1;
+  --z-sticky:  10;
+  --z-overlay: 100;
+  --z-modal:   1000;
+  --z-toast:   2000;
+  --z-crt:     9999;
+  --z-welcome: 9998;
+
+  /* ---------- Layout ---------- */
+  --container-narrow: 640px;
+  --container-md:     960px;
+  --container-wide:   1200px;
+  --content-pad:      clamp(1rem, 3vw, 2rem);
+}
+
+/* ============================================================
+   Reduced motion: respect OS preference automatically
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-med:  0ms;
+    --dur-slow: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* When user explicitly sets reduced motion via Settings (overrides OS) */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}

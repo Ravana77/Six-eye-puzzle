@@ -1,191 +1,23 @@
-/* Hard.css - Ultra Compact Buttons Version */
-.hard-game-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Arial', sans-serif;
-}
-
-.game-content {
-  width: 90%;
-  max-width: 800px;
-  text-align: center;
-  padding: 2rem;
-  background-color: rgba(34, 17, 51, 0.8);
-  border-radius: 15px;
-  box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
-  backdrop-filter: blur(5px);
-  border: 1px solid #8a2be2;
+.hard-page,
+.memory-page,
+.scramble-page,
+.survival-page,
+.timeattack-page {
   display: flex;
   flex-direction: column;
+  gap: var(--sp-5);
   align-items: center;
 }
 
-.puzzle-image {
-  width: 80%;
-  max-width: 400px;
-  border-radius: 15px;
-  box-shadow: 0 0 25px #ff00ff;
-  margin-bottom: 1.5rem;
-  filter: hue-rotate(-10deg) brightness(1.1) contrast(1.1) invert(1);
-  transition: all 0.3s ease;
-}
-
-.timer-display {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  color: #bf7aff;
-  text-shadow: 0 0 10px #bf7aff;
-  transition: all 0.3s ease;
-}
-
-.timer-display.critical {
-  color: #ff00ff;
-  text-shadow: 0 0 15px #ff00ff;
-  animation: pulse 0.5s infinite alternate;
-}
-
-.number-buttons {
+.hard-header,
+.memory-header,
+.scramble-header,
+.survival-header,
+.timeattack-header {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.number-btn {
-  width: 50px;
-  height: 50px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #8a2be2, #9932cc);
-  color: #e6d5ff;
-  box-shadow: 0 0 10px #8a2be2;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.number-btn:hover:not(:disabled) {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px #ff00ff;
-}
-
-.number-btn.selected {
-  background: linear-gradient(45deg, #ff00ff, #ff1493);
-  color: white;
-  box-shadow: 0 0 20px #ff00ff;
-}
-
-.number-btn:disabled:not(.selected) {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.action-buttons {
-  display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem; /* Tighter gap */
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.game-btn {
-  padding: 6px 12px; /* Much more compact */
-  font-size: 0.8rem; /* Smaller text */
-  font-weight: bold;
-  border: none;
-  border-radius: 8px; /* Tighter rounding */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 120px; /* Ensures consistent width */
-}
-
-.submit-btn {
-  background: linear-gradient(45deg, #ff00ff, #8a2be2);
-  color: white;
-  box-shadow: 0 0 15px #ff00ff;
-}
-
-.submit-btn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ff00ff;
-}
-
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.refresh-btn {
-  background: linear-gradient(45deg, #9932cc, #4b0082);
-  color: white;
-  box-shadow: 0 0 15px #9932cc;
-}
-
-.refresh-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #9932cc;
-}
-
-.message-alert {
-  padding: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 8px;
-  margin-top: 1rem;
-  animation: fadeIn 0.5s ease;
-}
-
-.message-alert.success {
-  background: linear-gradient(45deg, #00ff7f, #00bfff);
-  color: black;
-  box-shadow: 0 0 15px #00ff7f;
-}
-
-.message-alert.error {
-  background: linear-gradient(45deg, #ff1493, #ff4500);
-  color: white;
-  box-shadow: 0 0 15px #ff1493;
-  animation: shake 0.5s ease;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .number-btn {
-      width: 40px;
-      height: 40px;
-      font-size: 1rem;
-  }
-  
-  .game-btn {
-      padding: 5px 10px;
-      font-size: 0.75rem;
-      min-width: 100px;
-  }
-  
-  .message-alert {
-      font-size: 0.9rem;
-      padding: 8px;
-  }
+  width: 100%;
 }

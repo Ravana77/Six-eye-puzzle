@@ -1,0 +1,90 @@
+.sep-modal--gameover {
+  --modal-accent: var(--neon-magenta);
+  max-width: 420px;
+  border-color: var(--modal-accent);
+  box-shadow: var(--shadow-modal), 0 0 32px color-mix(in srgb, var(--modal-accent) 45%, transparent);
+  text-align: center;
+}
+
+.game-over__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  font-size: var(--fs-h2);
+  color: var(--modal-accent);
+  text-shadow: 0 0 10px var(--modal-accent), 0 0 22px color-mix(in srgb, var(--modal-accent) 55%, transparent);
+  margin: 0 0 var(--sp-3) 0;
+}
+
+.game-over__highscore {
+  display: inline-block;
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.25), rgba(255, 215, 0, 0.05));
+  border: 1.5px solid var(--status-warning);
+  border-radius: var(--r-pill);
+  color: var(--status-warning);
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  letter-spacing: var(--ls-wide);
+  text-shadow: 0 0 8px var(--status-warning);
+  animation: pulseSoft 1.6s ease-in-out infinite;
+}
+
+.game-over__score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: var(--sp-4) 0;
+}
+
+.game-over__score-label {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+.game-over__score-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  color: var(--text-primary);
+  text-shadow: 0 0 14px var(--modal-accent), 0 0 28px color-mix(in srgb, var(--modal-accent) 55%, transparent);
+  line-height: 1;
+}
+
+.game-over__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--sp-3);
+  margin: var(--sp-4) 0 var(--sp-5);
+  padding: var(--sp-3);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--r-md);
+}
+
+.game-over__stat { display: flex; flex-direction: column; gap: var(--sp-1); }
+.game-over__stat-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-tiny);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-dim);
+}
+.game-over__stat-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-soft);
+  text-shadow: 0 0 6px var(--modal-accent);
+  font-size: var(--fs-body);
+}
+
+.game-over__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}

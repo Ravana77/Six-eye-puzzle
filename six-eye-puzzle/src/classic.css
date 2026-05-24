@@ -1,120 +1,157 @@
-/* Classic.css */
-.classic-container {
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    color: white;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .button-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    padding: 1.5rem;
-  }
-  
-  .info-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 50%;
-    padding: 1.5rem;
-    height: 100vh;
-  }
-  
-  .game-btn {
-    width: 100%;
-    padding: 3rem 0;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    transform: perspective(500px) rotateX(20deg);
-    text-shadow: 0 0 5px currentColor;
-    letter-spacing: 2px;
-    cursor: pointer;
-  }
-  
-  .game-btn:hover {
-    transform: perspective(500px) rotateX(20deg) scale(1.1);
-    box-shadow: 0 0 30px currentColor !important;
-  }
-  
-  .easy-btn {
-    background-color: #8a2be2; /* Purple */
-    color: #e6d5ff;
-    box-shadow: 0 0 20px #8a2be2;
-  }
-  
-  .easy-btn:hover {
-    color: white;
-  }
-  
-  .hard-btn {
-    background-color: #ff00ff; /* Magenta */
-    color: #ffd5f5;
-    box-shadow: 0 0 20px #ff00ff;
-  }
-  
-  .hard-btn:hover {
-    color: white;
-  }
-  
-  .info-box {
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    background-color: rgba(34, 17, 51, 0.8);
-    backdrop-filter: blur(5px);
-    border: 1px solid transparent;
-  }
-  
-  .info-box:hover {
-    transform: translateY(-5px);
-  }
-  
-  .easy-info {
-    color: #d9b3ff;
-    border-color: #8a2be2;
-    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
-  }
-  
-  .easy-info h3 {
-    color: #bf7aff;
-    text-shadow: 0 0 10px #bf7aff;
-  }
-  
-  .hard-info {
-    color: #ffb3f5;
-    border-color: #ff00ff;
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
-  }
-  
-  .hard-info h3 {
-    color: #ff66f9;
-    text-shadow: 0 0 10px #ff66f9;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .classic-container {
-      flex-direction: column;
-    }
-    
-    .button-column,
-    .info-column {
-      width: 100%;
-      height: auto;
-    }
-    
-    .game-btn {
-      padding: 2rem 0;
-    }
-  }
+.classic-page,
+.rank-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.classic-header,
+.rank-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  position: relative;
+}
+
+.classic-back,
+.rank-back {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  font-size: var(--fs-small);
+  color: var(--neon-cyan);
+  text-shadow: var(--ts-sm-cyan);
+  text-decoration: none;
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border-soft);
+  transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast);
+}
+.classic-back:hover,
+.rank-back:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--neon-cyan);
+}
+
+.classic-sub,
+.rank-sub {
+  margin: 0;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  color: var(--text-muted);
+  font-size: var(--fs-small);
+}
+
+.classic-grid,
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sp-4);
+}
+
+.classic-card,
+.rank-card {
+  --card-accent: var(--neon-cyan);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid var(--card-accent);
+  border-radius: var(--r-lg);
+  color: var(--text-soft);
+  text-decoration: none;
+  min-height: 220px;
+  transition: transform var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.classic-card::before,
+.rank-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 18%, transparent), transparent 50%);
+  z-index: -1;
+}
+
+.classic-card:hover,
+.rank-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 22px var(--card-accent);
+}
+
+.classic-card__icon,
+.rank-card__icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 10px var(--card-accent));
+}
+
+.classic-card__head,
+.rank-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.classic-card__title,
+.rank-card__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wider);
+  font-size: var(--fs-h2);
+  margin: 0;
+  color: var(--card-accent);
+  text-shadow: 0 0 10px var(--card-accent), 0 0 24px color-mix(in srgb, var(--card-accent) 50%, transparent);
+}
+
+.classic-card__tag,
+.rank-card__tag {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-muted);
+  font-size: var(--fs-tiny);
+}
+
+.classic-card__desc,
+.rank-card__desc {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+}
+
+.classic-card__best,
+.rank-card__best {
+  font-family: var(--font-display);
+  font-size: var(--fs-tiny);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--card-accent);
+  text-shadow: 0 0 6px var(--card-accent);
+}
+
+.classic-card__cta,
+.rank-card__cta {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: var(--fs-body);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-primary);
+  align-self: flex-end;
+  transition: transform var(--dur-fast);
+}
+.classic-card:hover .classic-card__cta,
+.rank-card:hover .rank-card__cta { transform: translateX(4px); }
