@@ -163,7 +163,12 @@ const Survival = () => {
         />
       </header>
 
-      <PuzzleImage src={puzzle?.question} loading={loading} error={error} />
+      <PuzzleImage
+        src={puzzle?.question}
+        loading={loading}
+        error={error}
+        hint="Find the number that completes the puzzle"
+      />
 
       <NumberPad
         onSelect={handleSelect}

@@ -1,3 +1,11 @@
+.puzzle-image-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+}
+
 .puzzle-image {
   position: relative;
   width: 100%;
@@ -9,6 +17,17 @@
   background: rgba(0, 0, 0, 0.6);
   border: 1.5px solid var(--border-soft);
   box-shadow: 0 0 20px rgba(0, 240, 255, 0.18), inset 0 0 24px rgba(0, 0, 0, 0.4);
+}
+
+.puzzle-hint {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  opacity: 0.85;
 }
 
 .puzzle-image__skeleton {
@@ -23,10 +42,9 @@
   opacity: 0;
   transition: opacity var(--dur-med) var(--ease-out);
   background: transparent;
-  /* Inverts the white banana-API canvas to a dark neon-friendly look.
-     hue-rotate(180deg) brings colors back near their originals after the invert,
-     so bananas stay yellow-ish and the background flips to black. */
-  filter: invert(1) hue-rotate(180deg);
+  /* Classic invert from the original project — white canvas → black,
+     yellow bananas → vivid neon blue. High contrast, very visible. */
+  filter: invert(1);
 }
 
 .puzzle-image__img.is-loaded { opacity: 1; }

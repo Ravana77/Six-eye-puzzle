@@ -144,6 +144,9 @@ const Memory = () => {
         loading={loading}
         error={error}
         hidden={phase === "recall"}
+        hint={phase === "recall"
+          ? "Which number was missing?"
+          : "Memorise the missing number"}
       />
 
       <NumberPad

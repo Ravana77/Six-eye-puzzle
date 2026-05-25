@@ -120,7 +120,13 @@ const Easy = () => {
         <button type="button" className="btn-neon btn-neon--ghost btn-neon--magenta btn-neon--sm" onClick={endRun}>End Run</button>
       </header>
 
-      <PuzzleImage src={puzzle?.question} loading={loading} error={error} onRetry={fetchPuzzle} />
+      <PuzzleImage
+        src={puzzle?.question}
+        loading={loading}
+        error={error}
+        onRetry={fetchPuzzle}
+        hint="Find the number that completes the puzzle"
+      />
 
       <form className="easy-form" onSubmit={submit}>
         <label htmlFor="easy-answer" className="sr-only">Your answer</label>

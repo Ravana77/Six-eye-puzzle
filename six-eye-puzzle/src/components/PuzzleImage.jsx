@@ -5,7 +5,7 @@ import "./PuzzleImage.css";
  * PuzzleImage — wraps the banana-API image with loading skeleton,
  * error retry, and a fade-in transition between puzzles.
  */
-function PuzzleImage({ src, loading = false, error = null, onRetry, hidden = false, alt = "Puzzle" }) {
+function PuzzleImage({ src, loading = false, error = null, onRetry, hidden = false, alt = "Puzzle", hint = null }) {
   const [internalLoaded, setInternalLoaded] = useState(false);
 
   useEffect(() => {
@@ -35,17 +35,20 @@ function PuzzleImage({ src, loading = false, error = null, onRetry, hidden = fal
   }
 
   return (
-    <div className="puzzle-image">
-      {(loading || !internalLoaded) && <div className="puzzle-image__skeleton skeleton" aria-hidden="true" />}
-      {src && (
-        <img
-          src={src}
-          alt={alt}
-          className={`puzzle-image__img${internalLoaded ? " is-loaded" : ""}`}
-          onLoad={() => setInternalLoaded(true)}
-          draggable="false"
-        />
-      )}
+    <div className="puzzle-image-wrap">
+      <div className="puzzle-image">
+        {(loading || !internalLoaded) && <div className="puzzle-image__skeleton skeleton" aria-hidden="true" />}
+        {src && (
+          <img
+            src={src}
+            alt={alt}
+            className={`puzzle-image__img${internalLoaded ? " is-loaded" : ""}`}
+            onLoad={() => setInternalLoaded(true)}
+            draggable="false"
+          />
+        )}
+      </div>
+      {hint && <p className="puzzle-hint">{hint}</p>}
     </div>
   );
 }

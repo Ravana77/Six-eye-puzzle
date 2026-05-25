@@ -169,9 +169,13 @@ export default function DailyChallenge() {
         <div className="daily-streak">Streak — <strong>{streak}</strong></div>
       </header>
 
-      <PuzzleImage src={puzzle?.question} loading={loading} error={error} onRetry={fetchPuzzle} />
-
-      <p className="daily-hint">Pick the number that completes the puzzle.</p>
+      <PuzzleImage
+        src={puzzle?.question}
+        loading={loading}
+        error={error}
+        onRetry={fetchPuzzle}
+        hint="Find the number that completes the puzzle"
+      />
 
       <NumberPad
         onSelect={submit}
