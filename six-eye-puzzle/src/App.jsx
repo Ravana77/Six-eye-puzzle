@@ -46,7 +46,7 @@ function App() {
         <>
           <div className={`welcome-popup${exiting ? " is-exiting" : ""}`} aria-hidden="true">
             <div className="welcome-popup__line">Welcome to</div>
-            <div className="welcome-popup__line is-main">Six-Eye Puzzle</div>
+            <div className="welcome-popup__line is-main">Six Eye Puzzle</div>
           </div>
           <button
             type="button"
@@ -62,8 +62,8 @@ function App() {
       <section className="splash-hero">
         <h1 className="splash-hero__title">Six Eye Puzzle</h1>
         <p className="splash-hero__desc">
-          Sharpen your reflexes. Train your memory. Beat the clock. A six-game arcade
-          of neon-charged number puzzles — built to keep your mind moving.
+          Sharpen your reflexes. Train your memory. Beat the clock. Six Eye Puzzle is a
+          six-game arcade of neon-charged number puzzles — built to keep your mind moving.
         </p>
 
         <div className="splash-hero__cta">

@@ -43,10 +43,11 @@
   border-bottom: 1px solid var(--border-soft);
 }
 .auth-header__logo {
-  width: clamp(56px, 9vw, 80px);
+  width: clamp(72px, 10vw, 96px);
   height: auto;
   margin: 0 auto var(--sp-3);
-  filter: drop-shadow(0 0 10px var(--neon-magenta)) invert(0.85);
+  filter: drop-shadow(0 0 12px var(--neon-magenta))
+          drop-shadow(0 0 6px var(--neon-cyan));
 }
 .auth-header__title {
   font-family: var(--font-display);

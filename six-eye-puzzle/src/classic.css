@@ -59,7 +59,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
-  padding: var(--sp-5);
+  padding: var(--sp-4) var(--sp-4);
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -68,6 +68,7 @@
   color: var(--text-soft);
   text-decoration: none;
   min-height: 220px;
+  min-width: 0;
   transition: transform var(--dur-med) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out);
   overflow: hidden;
@@ -101,6 +102,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--sp-1);
+  min-width: 0;
 }
 
 .classic-card__title,
@@ -108,11 +110,14 @@
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: var(--ls-wider);
-  font-size: var(--fs-h2);
+  letter-spacing: var(--ls-wide);
+  font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+  line-height: 1.1;
   margin: 0;
   color: var(--card-accent);
   text-shadow: 0 0 10px var(--card-accent), 0 0 24px color-mix(in srgb, var(--card-accent) 50%, transparent);
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .classic-card__tag,

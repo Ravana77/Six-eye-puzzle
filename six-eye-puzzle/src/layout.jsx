@@ -45,10 +45,10 @@ function Header({ onOpenSettings }) {
   return (
     <header className="app-header crt-effect">
       <div className="app-header__bar">
-        <Link to="/game/home" className="app-header__brand" aria-label="Six-Eye Puzzle home">
+        <Link to="/game/home" className="app-header__brand" aria-label="Six Eye Puzzle home">
           <img src="/logo.png" alt="" className="app-header__logo" aria-hidden="true" />
           <div className="app-header__title-block">
-            <h1 className="app-header__title">Six-Eye Puzzle</h1>
+            <h1 className="app-header__title">Six Eye Puzzle</h1>
             <p className="app-header__subtitle">Unleash Your Inner Brainiac</p>
           </div>
         </Link>

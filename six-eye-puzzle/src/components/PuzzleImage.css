@@ -22,7 +22,11 @@
   object-fit: contain;
   opacity: 0;
   transition: opacity var(--dur-med) var(--ease-out);
-  background: rgba(255, 255, 255, 0.92);
+  background: transparent;
+  /* Inverts the white banana-API canvas to a dark neon-friendly look.
+     hue-rotate(180deg) brings colors back near their originals after the invert,
+     so bananas stay yellow-ish and the background flips to black. */
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .puzzle-image__img.is-loaded { opacity: 1; }

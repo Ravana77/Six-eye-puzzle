@@ -151,10 +151,10 @@
   --z-welcome: 9998;
 
   /* ---------- Layout ---------- */
-  --container-narrow: 640px;
-  --container-md:     960px;
-  --container-wide:   1200px;
-  --content-pad:      clamp(1rem, 3vw, 2rem);
+  --container-narrow: 880px;
+  --container-md:     1200px;
+  --container-wide:   1440px;
+  --content-pad:      clamp(1rem, 2.5vw, 2.25rem);
 }
 
 /* ============================================================
